@@ -10,6 +10,10 @@ export interface L {
 
 export type PackageCategory = 'hair' | 'beard' | 'combo' | 'kids' | 'vip' | 'addon';
 
+/** Where a service can be performed — home visit, at the studio, or either. */
+export const VENUES = ['home', 'shop', 'both'] as const;
+export type Venue = (typeof VENUES)[number];
+
 export interface Pkg {
   id: string;
   name: L;
@@ -19,6 +23,8 @@ export interface Pkg {
   description: L;
   category: PackageCategory;
   popular?: boolean;
+  /** Defaults to 'both' when unset (older content). */
+  venue?: Venue;
   /** Image path under /public (seeded art or /uploads via the CMS). */
   image?: string | null;
 }
@@ -101,7 +107,7 @@ export interface Testimonial {
 export const RESERVATION_STATUSES = ['new', 'confirmed', 'completed', 'cancelled', 'no-show'] as const;
 export type ReservationStatus = (typeof RESERVATION_STATUSES)[number];
 
-/** A submitted booking, as stored in data/reservations.json. */
+/** A submitted booking, as stored in the Supabase `reservations` table. */
 export interface StoredReservation {
   id: string;
   ref: string;
@@ -112,6 +118,10 @@ export interface StoredReservation {
   date: string; // YYYY-MM-DD
   time: string; // HH:MM
   notes: string;
+  /** 'home' = we go to the client, 'shop' = client comes to the studio. */
+  venue: Exclude<Venue, 'both'>;
+  /** Client address for home visits (empty for studio bookings). */
+  address: string;
   locale: Locale;
   status: ReservationStatus;
   createdAt: string; // ISO datetime

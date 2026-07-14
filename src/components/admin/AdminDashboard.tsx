@@ -174,6 +174,15 @@ const STATUS_STYLES: Record<ReservationStatus, string> = {
   'no-show': 'border-red-400/40 text-red-300/80'
 };
 
+/** Prefilled WhatsApp reminder in the language the client booked in. */
+function reminderLink(r: StoredReservation): string {
+  const text =
+    r.locale === 'ar'
+      ? `مرحباً ${r.name}! نذكّرك بموعدك في MJ Barbershop: ${r.serviceName} بتاريخ ${r.date} الساعة ${r.time}${r.venue === 'home' ? ' (زيارة منزلية)' : ' في الصالون'}. يرجى الرد للتأكيد 🙏`
+      : `Hello ${r.name}! A friendly reminder of your MJ Barbershop appointment: ${r.serviceName} on ${r.date} at ${r.time}${r.venue === 'home' ? ' (home visit)' : ' at our studio'}. Reply here to confirm 🙏`;
+  return `https://wa.me/${r.phone.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
+}
+
 function BookingsPanel() {
   const [reservations, setReservations] = useState<StoredReservation[] | null>(null);
   const [error, setError] = useState('');
@@ -248,7 +257,13 @@ function BookingsPanel() {
                   <p className="mt-1 text-sm text-cream/80">
                     {r.serviceName} — <span className="text-brass">{r.date}</span> at{' '}
                     <span className="text-brass">{r.time}</span>
+                    <span className={`ms-3 border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${r.venue === 'home' ? 'border-brass/50 text-brass' : 'border-cream/25 text-cream/60'}`}>
+                      {r.venue === 'home' ? '🏠 Home visit' : '💈 Studio'}
+                    </span>
                   </p>
+                  {r.venue === 'home' && r.address && (
+                    <p className="mt-1.5 text-xs text-cream/60">📍 {r.address}</p>
+                  )}
                   <p className="mt-2 flex flex-wrap items-center gap-4 text-xs text-cream/50">
                     <a href={`tel:${r.phone}`} className="link-lux hover:text-cream">
                       {r.phone}
@@ -260,6 +275,15 @@ function BookingsPanel() {
                       className="inline-flex items-center gap-1.5 text-cream/60 hover:text-brass"
                     >
                       <WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp
+                    </a>
+                    <a
+                      href={reminderLink(r)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-brass/90 hover:text-brass"
+                      title="Opens WhatsApp with a prefilled reminder message"
+                    >
+                      🔔 Send reminder
                     </a>
                     <span>via {r.locale === 'ar' ? 'Arabic site' : 'English site'}</span>
                     <span>received {new Date(r.createdAt).toLocaleString()}</span>

@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
-import { getReservationSettings } from '@/lib/content';
+import { getSiteContent } from '@/lib/content';
 import { addReservation, supabaseConfigured } from '@/lib/db';
 import { isBookableSlot, normalizeUAEPhone } from '@/lib/booking';
 import { escapeHtml, sendTelegramMessage, telegramConfigured } from '@/lib/telegram';
@@ -15,6 +15,8 @@ interface ReservePayload {
   date?: string;
   time?: string;
   notes?: string;
+  venue?: string;
+  address?: string;
   locale?: string;
   company?: string; // honeypot
 }
@@ -63,7 +65,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: 'invalid_service' }, { status: 400 });
   }
 
-  const settings = await getReservationSettings();
+  // Venue: constrained to what the chosen package actually offers.
+  const content = await getSiteContent();
+  const settings = content.reservation;
+  const pkgVenue = content.packages.find((p) => p.id === serviceId)?.venue ?? 'both';
+  let venue: 'home' | 'shop' = body.venue === 'home' ? 'home' : 'shop';
+  if (pkgVenue !== 'both') venue = pkgVenue;
+  const address = venue === 'home' ? (body.address ?? '').trim().slice(0, 300) : '';
+  if (venue === 'home' && address.length < 5) {
+    return NextResponse.json({ ok: false, error: 'invalid_address' }, { status: 400 });
+  }
+
   if (!isBookableSlot(settings, date, time)) {
     return NextResponse.json({ ok: false, error: 'invalid_slot' }, { status: 400 });
   }
@@ -74,7 +86,19 @@ export async function POST(req: NextRequest) {
   let stored = false;
   if (supabaseConfigured()) {
     try {
-      await addReservation({ ref, name, phone, serviceId, serviceName, date, time, notes, locale });
+      await addReservation({
+        ref,
+        name,
+        phone,
+        serviceId,
+        serviceName,
+        date,
+        time,
+        notes,
+        venue,
+        address,
+        locale
+      });
       stored = true;
     } catch (err) {
       console.error('[reserve] failed to store reservation:', err);
@@ -92,6 +116,9 @@ export async function POST(req: NextRequest) {
       `✂️ <b>Service:</b> ${escapeHtml(serviceName)}`,
       `📅 <b>Date:</b> ${escapeHtml(formatDate(date, 'en'))}`,
       `🕐 <b>Time:</b> ${escapeHtml(time)}`,
+      venue === 'home'
+        ? `🏠 <b>Home visit:</b> ${escapeHtml(address)}`
+        : '💈 <b>At the studio</b>',
       notes ? `📝 <b>Notes:</b> ${escapeHtml(notes)}` : null,
       `🌐 <b>Booked via:</b> ${locale === 'ar' ? 'Arabic site' : 'English site'}`,
       `🔖 <b>Ref:</b> ${ref}`,

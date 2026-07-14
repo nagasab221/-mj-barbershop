@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import SectionHeading from '@/components/SectionHeading';
 import Reveal from '@/components/Reveal';
-import { ClockIcon, ScissorsIcon } from '@/components/Icons';
+import { ClockIcon, HomeIcon, ScissorsIcon, StoreIcon } from '@/components/Icons';
 import { formatPrice } from '@/lib/utils';
 import { t as pick, type Locale, type PackageCategory, type Pkg } from '@/lib/types';
 
@@ -85,13 +85,26 @@ export default function Services({ packages, locale }: { packages: Pkg[]; locale
                   </p>
                 </div>
 
-                <div className="mt-3 flex items-center gap-4 text-[11px] font-semibold uppercase tracking-wider text-cream/50">
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-wider text-cream/50">
                   <span className="flex items-center gap-1.5">
                     <ClockIcon className="h-3.5 w-3.5 text-brass/80" />
                     {t('mins', { count: pkg.duration })}
                   </span>
                   <span className="h-3 w-px bg-cream/15" aria-hidden />
                   <span>{t(`categories.${pkg.category}`)}</span>
+                  <span className="h-3 w-px bg-cream/15" aria-hidden />
+                  <span className="flex items-center gap-1.5 text-brass/90">
+                    {pkg.venue === 'shop' ? (
+                      <StoreIcon className="h-3.5 w-3.5" />
+                    ) : (
+                      <HomeIcon className="h-3.5 w-3.5" />
+                    )}
+                    {pkg.venue === 'home'
+                      ? t('venueHome')
+                      : pkg.venue === 'shop'
+                        ? t('venueShop')
+                        : t('venueBoth')}
+                  </span>
                 </div>
 
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-smoke-light">

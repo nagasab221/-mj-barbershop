@@ -1,18 +1,22 @@
 import { useTranslations } from 'next-intl';
 import SectionHeading from '@/components/SectionHeading';
 import Reveal from '@/components/Reveal';
-import BookingForm from '@/components/BookingForm';
+import BookingTabs from '@/components/BookingTabs';
+import type { ServiceOption } from '@/components/BookingForm';
 import { t as pick, type Locale, type SiteContent } from '@/lib/types';
 
 export default function Reservations({ content, locale }: { content: SiteContent; locale: Locale }) {
   const t = useTranslations('booking');
   const { reservation, packages, site } = content;
 
-  // Client component gets a lean, serializable list of services.
-  const services = packages.map((p) => ({
+  // Client components get a lean, serializable list of services.
+  const services: ServiceOption[] = packages.map((p) => ({
     id: p.id,
     label: pick(p.name, locale),
-    price: p.price
+    price: p.price,
+    startingFrom: Boolean(p.startingFrom),
+    duration: p.duration,
+    venue: p.venue ?? 'both'
   }));
 
   return (
@@ -26,8 +30,8 @@ export default function Reservations({ content, locale }: { content: SiteContent
         />
 
         <Reveal>
-          <div className="dark-scheme mx-auto max-w-3xl border border-ink/10 bg-ink p-7 shadow-[0_30px_60px_-30px_rgba(10,10,10,0.5)] md:p-12">
-            <BookingForm
+          <div className="dark-scheme mx-auto max-w-5xl border border-ink/10 bg-ink p-6 shadow-[0_30px_60px_-30px_rgba(10,10,10,0.5)] md:p-10">
+            <BookingTabs
               services={services}
               settings={{
                 heading: reservation.heading,

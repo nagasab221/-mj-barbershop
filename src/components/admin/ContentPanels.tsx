@@ -15,7 +15,7 @@ import {
   TextField,
   Toggle
 } from '@/components/admin/fields';
-import type { PackageCategory, SiteContent } from '@/lib/types';
+import type { PackageCategory, SiteContent, Venue } from '@/lib/types';
 
 interface PanelProps {
   content: SiteContent;
@@ -95,6 +95,18 @@ export function ServicesPanel({ content, setContent }: PanelProps) {
                     {o.label}
                   </option>
                 ))}
+              </select>
+            </div>
+            <div>
+              <label className="field-label">Where is it offered?</label>
+              <select
+                className="field"
+                value={pkg.venue ?? 'both'}
+                onChange={(e) => update(i, { venue: e.target.value as Venue })}
+              >
+                <option value="both">Home visit or studio</option>
+                <option value="home">Home visit only</option>
+                <option value="shop">Studio only</option>
               </select>
             </div>
           </FieldGrid>

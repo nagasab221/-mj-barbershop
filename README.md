@@ -133,6 +133,33 @@ gitignored `.dev.vars` file (same `KEY=value` format as `.env.local`).
 
 ---
 
+## Updating the site
+
+There are two kinds of updates — most day-to-day changes need **no deploy at all**:
+
+**Content changes (prices, hours, copy, images, blocked dates …)**
+Log in at `/admin`, edit, hit **Save changes**. Live on the next page load. Nothing else
+to do — no git, no rebuild.
+
+**Code changes (design, features, new sections)**
+```bash
+# after editing the code locally:
+npm run typecheck && npm run build   # sanity check
+git add -A
+git commit -m "Describe the change"
+git push
+```
+The push triggers Cloudflare's build automatically (~2–4 min). Watch it under
+**Workers & Pages → mj-barbershop → Deployments**; when it goes green, the site is
+updated. To roll back a bad deploy, open Deployments and press **Rollback** on the
+previous good one.
+
+**Database changes** (rare — only when a code change says so): run the SQL file the
+change ships with (e.g. `supabase/migration-*.sql`) in **Supabase → SQL Editor** *before*
+pushing the code.
+
+---
+
 ## The CMS (`/admin`)
 
 | Tab                    | Controls                                                                    |

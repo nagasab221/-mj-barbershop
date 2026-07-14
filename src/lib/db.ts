@@ -37,6 +37,8 @@ interface ReservationRow {
   date: string;
   time: string;
   notes: string;
+  venue?: string;
+  address?: string;
   locale: string;
   status: ReservationStatus;
   created_at: string;
@@ -53,6 +55,8 @@ function rowToReservation(row: ReservationRow): StoredReservation {
     date: row.date,
     time: row.time,
     notes: row.notes,
+    venue: row.venue === 'home' ? 'home' : 'shop',
+    address: row.address ?? '',
     locale: (row.locale === 'ar' ? 'ar' : 'en') as Locale,
     status: row.status,
     createdAt: row.created_at
@@ -128,23 +132,83 @@ export async function listReservations(): Promise<StoredReservation[]> {
 export async function addReservation(
   input: Omit<StoredReservation, 'id' | 'status' | 'createdAt'>
 ): Promise<StoredReservation> {
-  const { data, error } = await supabase()
+  const base = {
+    ref: input.ref,
+    name: input.name,
+    phone: input.phone,
+    service_id: input.serviceId,
+    service_name: input.serviceName,
+    date: input.date,
+    time: input.time,
+    notes: input.notes,
+    locale: input.locale
+  };
+
+  let { data, error } = await supabase()
     .from('reservations')
-    .insert({
-      ref: input.ref,
-      name: input.name,
-      phone: input.phone,
-      service_id: input.serviceId,
-      service_name: input.serviceName,
-      date: input.date,
-      time: input.time,
-      notes: input.notes,
-      locale: input.locale
-    })
+    .insert({ ...base, venue: input.venue, address: input.address })
     .select('*')
     .single();
+
+  // Graceful pre-migration fallback: if the venue/address columns don't exist
+  // yet (supabase/migration-home-visits.sql not run), fold them into notes so
+  // no booking is ever lost.
+  if (error && /venue|address/i.test(error.message)) {
+    const venueNote = input.venue === 'home' ? `[Home visit] ${input.address}` : '[Studio]';
+    ({ data, error } = await supabase()
+      .from('reservations')
+      .insert({ ...base, notes: [venueNote, input.notes].filter(Boolean).join(' — ') })
+      .select('*')
+      .single());
+  }
+
   if (error) throw new Error(error.message);
   return rowToReservation(data as ReservationRow);
+}
+
+/** Look up one booking by its public credentials (reference + phone). */
+export async function findReservation(ref: string, phone: string): Promise<StoredReservation | null> {
+  const { data, error } = await supabase()
+    .from('reservations')
+    .select('*')
+    .eq('ref', ref)
+    .eq('phone', phone)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  return data ? rowToReservation(data as ReservationRow) : null;
+}
+
+/** Client-initiated reschedule: new slot, status back to 'new' for re-confirmation. */
+export async function rescheduleReservation(
+  ref: string,
+  phone: string,
+  date: string,
+  time: string
+): Promise<boolean> {
+  const { data, error } = await supabase()
+    .from('reservations')
+    .update({ date, time, status: 'new' })
+    .eq('ref', ref)
+    .eq('phone', phone)
+    .in('status', ['new', 'confirmed'])
+    .select('id');
+  if (error) throw new Error(error.message);
+  return (data?.length ?? 0) > 0;
+}
+
+/** Client-initiated cancellation. */
+export async function cancelReservation(ref: string, phone: string): Promise<boolean> {
+  const { data, error } = await supabase()
+    .from('reservations')
+    .update({ status: 'cancelled' })
+    .eq('ref', ref)
+    .eq('phone', phone)
+    .in('status', ['new', 'confirmed'])
+    .select('id');
+  if (error) throw new Error(error.message);
+  return (data?.length ?? 0) > 0;
 }
 
 export async function updateReservationStatus(

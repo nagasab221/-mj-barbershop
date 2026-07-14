@@ -7,6 +7,7 @@
 import { uploadsPublicPrefix } from '@/lib/supabase';
 import {
   DAY_KEYS,
+  VENUES,
   type BlockedDate,
   type DayHours,
   type L,
@@ -123,6 +124,7 @@ export function sanitizeContent(input: unknown): SiteContent {
         description: loc(o.description, 600),
         category,
         popular: Boolean(o.popular),
+        venue: VENUES.find((v) => v === o.venue) ?? 'both',
         image: imagePath(o.image) || null
       };
     }),

@@ -1,20 +1,20 @@
 {
   "site": {
     "tagline": {
-      "en": "Grooming, elevated.",
-      "ar": "حيث تكتمل الأناقة."
+      "en": "Grooming, delivered.",
+      "ar": "الأناقة تصلك أينما كنت."
     },
     "heroEyebrow": {
-      "en": "Premium Barbershop · Dubai, UAE",
-      "ar": "صالون حلاقة فاخر · دبي، الإمارات"
+      "en": "Premium Mobile Barber · Dubai, UAE",
+      "ar": "حلّاق متنقّل فاخر · دبي، الإمارات"
     },
     "heroTitle": {
       "en": "The Art of the Perfect Cut",
       "ar": "فنّ الحلاقة كما يجب أن يكون"
     },
     "heroSubtitle": {
-      "en": "Classic craft, modern precision. Walk out sharper — every single time.",
-      "ar": "حرفة كلاسيكية بدقّة عصرية. اخرج من عندنا بإطلالة أكثر أناقة — في كل زيارة."
+      "en": "Classic craft, modern precision — at your door, or in our Jumeirah studio. Walk out sharper, wherever you are.",
+      "ar": "حرفة كلاسيكية بدقّة عصرية — نصل إلى باب بيتك، أو نستقبلك في صالوننا بجميرا. أناقتك، أينما كنت."
     },
     "aboutHeading": {
       "en": "A Tradition of Craft",
@@ -28,6 +28,10 @@
       {
         "en": "Every visit begins with a conversation and ends with a look that is unmistakably yours. No queues, no noise, no shortcuts — just honest craft, premium products, and time set aside for you.",
         "ar": "كل زيارة تبدأ بحوار قصير لفهم ذوقك، وتنتهي بإطلالة تشبهك تماماً. لا انتظار، ولا ضجيج، ولا حلول سريعة — حرفة صادقة، ومنتجات فاخرة، ووقت مخصّص لك وحدك."
+      },
+      {
+        "en": "Most of our clients never leave home: our barbers arrive with a complete mobile studio — sterilised tools, pressed capes, everything handled. Prefer to come to us? Our Jumeirah studio welcomes you daily.",
+        "ar": "معظم عملائنا لا يغادرون منازلهم: يصل حلّاقونا إليك بعدّة متكاملة — أدوات معقّمة وتجهيز كامل حتى آخر التفاصيل. وإن كنت تفضّل زيارتنا، فصالوننا في جميرا يستقبلك يومياً."
       }
     ],
     "founderName": {
@@ -60,8 +64,8 @@
       "ar": "احجز كرسيّك"
     },
     "subheading": {
-      "en": "Choose your service and time — we confirm within minutes on WhatsApp.",
-      "ar": "اختر الخدمة والوقت المناسب، ونؤكد حجزك عبر واتساب خلال دقائق."
+      "en": "Pick your service, choose home visit or studio, and we confirm on WhatsApp within minutes.",
+      "ar": "اختر خدمتك، وحدّد زيارة منزلية أو في الصالون، ونؤكد حجزك عبر واتساب خلال دقائق."
     },
     "workingHours": [
       { "day": "saturday", "closed": false, "open": "10:00", "close": "22:00" },
@@ -99,6 +103,7 @@
       },
       "category": "hair",
       "popular": false,
+      "venue": "both",
       "image": null
     },
     {
@@ -113,6 +118,7 @@
       },
       "category": "beard",
       "popular": false,
+      "venue": "both",
       "image": null
     },
     {
@@ -127,6 +133,7 @@
       },
       "category": "combo",
       "popular": true,
+      "venue": "both",
       "image": null
     },
     {
@@ -141,6 +148,7 @@
       },
       "category": "beard",
       "popular": false,
+      "venue": "both",
       "image": null
     },
     {
@@ -155,6 +163,7 @@
       },
       "category": "kids",
       "popular": false,
+      "venue": "both",
       "image": null
     },
     {
@@ -169,6 +178,7 @@
       },
       "category": "vip",
       "popular": false,
+      "venue": "home",
       "image": null
     },
     {
@@ -183,6 +193,7 @@
       },
       "category": "addon",
       "popular": false,
+      "venue": "shop",
       "image": null
     },
     {
@@ -197,6 +208,7 @@
       },
       "category": "addon",
       "popular": false,
+      "venue": "shop",
       "image": null
     }
   ],

@@ -37,29 +37,29 @@ export default function Header() {
         scrolled ? 'border-b border-cream/10 bg-ink/90 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto flex h-20 max-w-content items-center justify-between px-5 md:px-8">
+      <div className="mx-auto flex h-20 max-w-content items-center gap-4 px-5 md:px-8">
         {/* Brand */}
         <a href="#top" className="flex shrink-0 items-center gap-3 text-cream transition-colors duration-500 hover:text-brass">
           <Emblem className="h-11 w-11 shrink-0" />
-          <span className="whitespace-nowrap font-display text-lg tracking-[0.18em]">
+          <span className="whitespace-nowrap font-display text-base tracking-[0.14em] xl:text-lg xl:tracking-[0.18em]">
             MJ <span className="text-brass">·</span> <span className="hidden min-[400px]:inline">BARBERSHOP</span>
           </span>
         </a>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Main">
+        {/* Desktop nav — flex-1 keeps it centered with breathing room on both sides */}
+        <nav className="hidden flex-1 items-center justify-center gap-5 lg:flex xl:gap-6" aria-label="Main">
           {ANCHORS.map((a) => (
             <a
               key={a}
               href={`#${a}`}
-              className="link-lux text-[11px] font-semibold uppercase tracking-luxe text-cream/80 hover:text-cream"
+              className="link-lux whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.16em] text-cream/80 hover:text-cream"
             >
               {t(a)}
             </a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-3 md:gap-5">
+        <div className="ms-auto flex shrink-0 items-center gap-3 lg:ms-0 md:gap-4">
           {/* Language switcher */}
           <Link
             href="/"
@@ -88,10 +88,12 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile overlay menu */}
+      {/* Mobile overlay menu — slides in from the end edge */}
       <div
-        className={`fixed inset-0 z-50 flex flex-col bg-ink pinstripes-light transition-opacity duration-500 lg:hidden ${
-          open ? 'opacity-100' : 'pointer-events-none opacity-0'
+        className={`fixed inset-0 z-50 flex flex-col bg-ink pinstripes-light transition-[transform,opacity] duration-500 ease-elegant lg:hidden ${
+          open
+            ? 'translate-x-0 opacity-100'
+            : 'pointer-events-none translate-x-full opacity-0 rtl:-translate-x-full'
         }`}
         aria-hidden={!open}
       >

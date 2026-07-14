@@ -15,6 +15,7 @@ import Gallery from '@/components/Gallery';
 import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import FloatingCTA from '@/components/FloatingCTA';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -92,6 +93,7 @@ export default async function HomePage({
         <Contact site={content.site} locale={loc} />
       </main>
       <Footer content={content} locale={loc} />
+      <FloatingCTA whatsapp={content.site.whatsapp} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(content, loc)) }}
