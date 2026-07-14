@@ -6,8 +6,6 @@ import { isBookableSlot, normalizeUAEPhone } from '@/lib/booking';
 import { escapeHtml, sendTelegramMessage, telegramConfigured } from '@/lib/telegram';
 import { formatDate, rateLimit } from '@/lib/utils';
 
-export const runtime = 'edge';
-
 interface ReservePayload {
   name?: string;
   phone?: string;

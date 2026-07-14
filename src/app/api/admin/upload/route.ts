@@ -2,8 +2,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { isAdminRequest } from '@/lib/auth';
 import { supabase, supabaseConfigured, uploadsPublicPrefix } from '@/lib/supabase';
 
-export const runtime = 'edge';
-
 const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
 
 const EXT_BY_MIME: Record<string, string> = {

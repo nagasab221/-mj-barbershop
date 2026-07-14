@@ -3,8 +3,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { escapeHtml, sendTelegramMessage, telegramConfigured } from '@/lib/telegram';
 import { rateLimit } from '@/lib/utils';
 
-export const runtime = 'edge';
-
 interface ContactPayload {
   name?: string;
   contact?: string;

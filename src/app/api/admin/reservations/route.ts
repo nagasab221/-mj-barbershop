@@ -8,8 +8,6 @@ import {
 } from '@/lib/db';
 import { RESERVATION_STATUSES } from '@/lib/types';
 
-export const runtime = 'edge';
-
 function unauthorized() {
   return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 });
 }

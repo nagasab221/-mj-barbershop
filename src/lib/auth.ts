@@ -4,7 +4,7 @@
  * Single owner password (ADMIN_PASSWORD); a successful login sets an
  * HttpOnly cookie holding an expiry timestamp signed with HMAC-SHA256
  * (ADMIN_SESSION_SECRET). Built on the Web Crypto API so it runs on the
- * Edge runtime (Cloudflare Pages) as well as Node — crypto.subtle.verify
+ * Cloudflare Workers runtime as well as Node — crypto.subtle.verify
  * performs the comparisons in constant time.
  */
 import { cookies } from 'next/headers';

@@ -3,8 +3,6 @@ import { isAdminRequest } from '@/lib/auth';
 import { getContent, saveContent, supabaseConfigured } from '@/lib/db';
 import { sanitizeContent } from '@/lib/sanitize';
 
-export const runtime = 'edge';
-
 function unauthorized() {
   return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 });
 }

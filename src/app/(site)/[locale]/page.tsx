@@ -19,9 +19,7 @@ import Footer from '@/components/Footer';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 // Content lives in Supabase and is edited via /admin — render on every
-// request (on the Edge runtime for Cloudflare Pages) so changes appear
-// immediately.
-export const runtime = 'edge';
+// request so changes appear immediately.
 export const dynamic = 'force-dynamic';
 
 const SCHEMA_DAYS: Record<string, string> = {
@@ -46,7 +44,6 @@ function buildJsonLd(content: SiteContent, locale: Locale) {
     telephone: site.phone,
     email: site.email,
     priceRange: 'AED 40 - AED 180',
-    image: `${SITE_URL}/${locale}/opengraph-image`,
     address: {
       '@type': 'PostalAddress',
       streetAddress: pick(location.address, locale),

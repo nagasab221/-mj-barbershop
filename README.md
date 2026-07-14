@@ -1,11 +1,11 @@
 # MJ Barbershop — Website
 
 A bilingual (English / العربية) single-page marketing site for a premium UAE barbershop,
-with its **own CMS at `/admin`**, running on **Cloudflare Pages + Supabase**.
+with its **own CMS at `/admin`**, running on **Cloudflare Workers + Supabase**.
 
-**Stack:** Next.js 14 (App Router, Edge runtime) · TypeScript · Tailwind CSS · next-intl
-(locale routing + RTL) · Supabase (Postgres + Storage) · Telegram Bot API (booking
-notifications) · Cloudflare Pages (hosting)
+**Stack:** Next.js 14 (App Router) · TypeScript · Tailwind CSS · next-intl (locale routing +
+RTL) · Supabase (Postgres + Storage) · Telegram Bot API (booking notifications) · Cloudflare
+Workers via [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) (hosting)
 
 ---
 
@@ -25,17 +25,19 @@ to unlock editing and the bookings inbox — locally and in production alike.
 
 ### Scripts
 
-| Command               | Purpose                                             |
-| --------------------- | --------------------------------------------------- |
-| `npm run dev`         | Dev server on port 3000                             |
-| `npm run build`       | Standard Next.js production build                   |
-| `npm run typecheck`   | TypeScript check                                    |
-| `npm run lint`        | ESLint                                              |
-| `npm run pages:build` | Build the Cloudflare Pages artifact (Linux/WSL/CI)  |
-| `npm run pages:deploy`| Build + deploy with Wrangler (needs `wrangler login`) |
+| Command             | Purpose                                                     |
+| ------------------- | ---------------------------------------------------------- |
+| `npm run dev`       | Dev server on port 3000                                    |
+| `npm run build`     | Standard Next.js production build                          |
+| `npm run typecheck` | TypeScript check                                           |
+| `npm run lint`      | ESLint                                                     |
+| `npm run cf:build`  | Build the Cloudflare Workers bundle (`.open-next/`)        |
+| `npm run preview`   | Build + run the Worker locally in workerd (reads `.dev.vars`) |
+| `npm run deploy`    | Build + deploy to Cloudflare with Wrangler (`wrangler login` first) |
 
-> `pages:build` does not run on plain Windows (the adapter spawns Unix-style processes
-> and needs symlinks). That's fine — Cloudflare's build CI runs it on Linux for you.
+> Cloudflare's build CI (Linux) is the source of truth for production builds. The
+> OpenNext build prints a Windows-compatibility warning locally — harmless for the
+> Git-integration deploy below, which builds on Linux.
 
 ---
 
@@ -77,62 +79,57 @@ policies, so the anon key can't read anything (including customers' phone number
 
 ---
 
-## Deploying to Cloudflare Pages with Wrangler
+## Deploying to Cloudflare Workers
 
-> **The build step needs a Unix-like OS.** `@cloudflare/next-on-pages` shells out to
-> `vercel build` and creates symlinks, which don't work on native Windows. Run the
-> `pages:build` + `wrangler deploy` steps from **macOS, Linux, or WSL**. On Windows,
-> install WSL once with `wsl --install` (then work inside the Ubuntu shell), or use the
-> Git-integration path at the bottom (Cloudflare builds it on their Linux CI — no local
-> Unix needed).
+Cloudflare merged Pages into Workers, so the site deploys as a **Worker** using the
+[OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare). The `wrangler.jsonc` in
+the repo already configures the worker entry, the static-assets binding, and the required
+`nodejs_compat` flag — you only supply environment variables.
 
-### 1. One-time: authenticate & create the project
+### Recommended: Git integration (builds on Cloudflare's Linux CI)
 
-```bash
-npm install -g wrangler          # or use `npx wrangler ...` everywhere
-wrangler login                   # opens a browser to authorize your Cloudflare account
-wrangler pages project create mj-barbershop --production-branch main
-```
+1. Push this repo to GitHub.
+2. Cloudflare dashboard → **Workers & Pages → Create → Import a repository** → pick the repo.
+3. Build settings:
+   - **Project name:** `mj-barbershop`  → your site becomes `mj-barbershop.<subdomain>.workers.dev`
+   - **Build command:** `npm run cf:build`
+   - **Deploy command:** `npx wrangler deploy` *(the dashboard pre-fills this — correct)*
+   - Leave the **root/path** at the repo root (do **not** set it to a build-output folder).
+4. **Environment variables** (Settings → Variables and Secrets). Add as **Secret**:
+   `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`,
+   `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Add `NEXT_PUBLIC_SITE_URL` as a **build**
+   variable (it's inlined at build time) set to your final URL, e.g.
+   `https://mj-barbershop.<subdomain>.workers.dev` or a custom domain.
+5. Deploy. Every push to `main` rebuilds automatically; content edits in `/admin` are live
+   on the next request (no rebuild needed).
 
-### 2. One-time: set the runtime secrets on the project
+`NEXT_PUBLIC_SITE_URL` only affects SEO/canonical URLs, so if you don't know the final
+subdomain yet, deploy once, read the assigned `*.workers.dev` URL, set the variable, and
+redeploy.
 
-These are read by the Edge functions at runtime (values are prompted, not echoed):
+### Alternative: deploy from your machine with Wrangler
 
-```bash
-wrangler pages secret put SUPABASE_URL              --project-name mj-barbershop
-wrangler pages secret put SUPABASE_SERVICE_ROLE_KEY --project-name mj-barbershop
-wrangler pages secret put ADMIN_PASSWORD            --project-name mj-barbershop
-wrangler pages secret put ADMIN_SESSION_SECRET      --project-name mj-barbershop
-wrangler pages secret put TELEGRAM_BOT_TOKEN        --project-name mj-barbershop
-wrangler pages secret put TELEGRAM_CHAT_ID          --project-name mj-barbershop
-```
-
-`nodejs_compat` is already supplied by `wrangler.toml`. (If a route ever errors with a
-Node API message, add the `nodejs_compat` flag under Pages → Settings → Functions in the
-dashboard for both Production and Preview.)
-
-### 3. Build & deploy (repeat for each release)
-
-`NEXT_PUBLIC_SITE_URL` is inlined at **build time**, so export it before building:
+Works on Windows too (the OpenNext build runs locally despite its warning):
 
 ```bash
-export NEXT_PUBLIC_SITE_URL="https://mj-barbershop.pages.dev"   # or your custom domain
-npm install
-npm run pages:build            # → produces .vercel/output/static
-wrangler pages deploy .vercel/output/static --project-name mj-barbershop
+npx wrangler login                # authorize your Cloudflare account (browser)
+# set the six runtime secrets once:
+npx wrangler secret put SUPABASE_URL
+npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+npx wrangler secret put ADMIN_PASSWORD
+npx wrangler secret put ADMIN_SESSION_SECRET
+npx wrangler secret put TELEGRAM_BOT_TOKEN
+npx wrangler secret put TELEGRAM_CHAT_ID
+# build + deploy (NEXT_PUBLIC_SITE_URL is baked in at build time):
+NEXT_PUBLIC_SITE_URL="https://mj-barbershop.<subdomain>.workers.dev" npm run deploy
 ```
 
-That's it — every page and API route runs as an Edge function, and content edits in
-`/admin` are live on the next request (no rebuild needed). To ship code changes later,
-re-run step 3.
+`npm run preview` builds and runs the worker locally in workerd, reading secrets from a
+gitignored `.dev.vars` file (same `KEY=value` format as `.env.local`).
 
-### Alternative: Git integration (no local Unix required)
-
-Push the repo to GitHub, then in the Cloudflare dashboard: **Workers & Pages → Create →
-Pages → Connect to Git**. Set **Build command** `npx @cloudflare/next-on-pages@1.13.15`,
-**Output directory** `.vercel/output/static`, add all the environment variables from the
-table above (including `NEXT_PUBLIC_SITE_URL`), and deploy. Cloudflare's Linux CI runs the
-build for you on every push.
+> **Note on Next.js version:** OpenNext flags Next 14 as past its 2-year support window, so
+> the build uses `--dangerouslyUseUnsupportedNextVersion` (already wired into `cf:build`).
+> It builds and runs fine; upgrading to Next 15 later removes the flag.
 
 ---
 
@@ -158,7 +155,7 @@ HMAC-signed HttpOnly cookies (7 days).
 
 ```
 Booking form (/en or /ar)
-   └─ POST /api/reserve  (Edge function)
+   └─ POST /api/reserve  (Worker request handler)
         ├─ validates name, UAE phone (05x…), service, date & time
         │    · slots come from working hours + blocked dates set in /admin
         │    · same-day bookings need ≥ 1h lead time; horizon = 90 days
@@ -189,7 +186,8 @@ src/
 messages/                 # UI strings (en.json / ar.json)
 public/gallery/           # placeholder artwork (replace via /admin → Gallery)
 supabase/schema.sql       # one-time database setup
-wrangler.toml             # Cloudflare Pages config (nodejs_compat)
+wrangler.jsonc            # Cloudflare Workers config (entry, assets, nodejs_compat)
+open-next.config.ts       # OpenNext → Cloudflare adapter config
 ```
 
 ### Extending the CMS

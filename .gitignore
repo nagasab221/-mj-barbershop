@@ -26,6 +26,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# cloudflare
+# cloudflare / opennext build output
+.open-next/
 .vercel/
 .wrangler/
+# wrangler local secrets (used by `npm run preview`)
+.dev.vars

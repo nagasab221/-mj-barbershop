@@ -2,8 +2,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { SESSION_COOKIE, SESSION_MAX_AGE, checkPassword, createSessionValue } from '@/lib/auth';
 import { rateLimit } from '@/lib/utils';
 
-export const runtime = 'edge';
-
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
   if (!rateLimit(`admin-login:${ip}`, 5, 10 * 60 * 1000)) {
