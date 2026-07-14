@@ -166,7 +166,7 @@ pushing the code.
 | ---------------------- | --------------------------------------------------------------------------- |
 | **Bookings**           | Inbox of reservations — status (new → confirmed → completed / cancelled / no-show), call/WhatsApp the client, delete |
 | **Services & Pricing** | Add/remove/reorder packages: name, AED price, duration, category, badge, image |
-| **Hours & Dates**      | Booking copy, weekly working hours, blocked dates (Eid, holidays)           |
+| **Hours & Dates**      | Booking copy, weekly working hours, blocked dates (Eid, holidays), and **Venue & travel**: studio open/closed toggle (off = mobile-only, studio shows “coming soon”), base area name (no travel fee), and the travel fee (AED) for home visits outside it |
 | **Site Copy**          | Hero, tagline, about story, founder bio, stats, phone/WhatsApp/email/socials |
 | **Location**           | Address, display hours, map coordinates                                     |
 | **Gallery**            | Upload images (JPG/PNG/WebP ≤ 8 MB → Supabase Storage) with bilingual captions |

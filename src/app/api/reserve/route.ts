@@ -16,6 +16,7 @@ interface ReservePayload {
   time?: string;
   notes?: string;
   venue?: string;
+  area?: string;
   address?: string;
   locale?: string;
   company?: string; // honeypot
@@ -65,16 +66,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: 'invalid_service' }, { status: 400 });
   }
 
-  // Venue: constrained to what the chosen package actually offers.
   const content = await getSiteContent();
   const settings = content.reservation;
-  const pkgVenue = content.packages.find((p) => p.id === serviceId)?.venue ?? 'both';
-  let venue: 'home' | 'shop' = body.venue === 'home' ? 'home' : 'shop';
-  if (pkgVenue !== 'both') venue = pkgVenue;
+  const pkg = content.packages.find((p) => p.id === serviceId);
+
+  // Venue: forced to home while the studio is "coming soon"; otherwise
+  // constrained to what the chosen package offers.
+  const pkgVenue = pkg?.venue ?? 'both';
+  let venue: 'home' | 'shop';
+  if (!settings.studioOpen) {
+    venue = 'home';
+  } else {
+    venue = body.venue === 'shop' ? 'shop' : 'home';
+    if (pkgVenue !== 'both') venue = pkgVenue;
+  }
+
   const address = venue === 'home' ? (body.address ?? '').trim().slice(0, 300) : '';
   if (venue === 'home' && address.length < 5) {
     return NextResponse.json({ ok: false, error: 'invalid_address' }, { status: 400 });
   }
+
+  // Area-based travel fee (home visits only).
+  const area: 'inside' | 'outside' = venue === 'home' && body.area === 'outside' ? 'outside' : 'inside';
+  const travelFee = area === 'outside' ? Math.max(0, Math.round(settings.travelFee || 0)) : 0;
+  const total = (pkg?.price ?? 0) + travelFee;
 
   if (!isBookableSlot(settings, date, time)) {
     return NextResponse.json({ ok: false, error: 'invalid_slot' }, { status: 400 });
@@ -97,6 +112,8 @@ export async function POST(req: NextRequest) {
         notes,
         venue,
         address,
+        area,
+        travelFee,
         locale
       });
       stored = true;
@@ -119,6 +136,10 @@ export async function POST(req: NextRequest) {
       venue === 'home'
         ? `🏠 <b>Home visit:</b> ${escapeHtml(address)}`
         : '💈 <b>At the studio</b>',
+      venue === 'home'
+        ? `📍 <b>Area:</b> ${area === 'outside' ? `Outside ${escapeHtml(settings.areaName.en || 'area')} (+AED ${travelFee})` : `Inside ${escapeHtml(settings.areaName.en || 'area')}`}`
+        : null,
+      `💰 <b>Total:</b> AED ${total}${travelFee > 0 ? ` (incl. AED ${travelFee} travel)` : ''}`,
       notes ? `📝 <b>Notes:</b> ${escapeHtml(notes)}` : null,
       `🌐 <b>Booked via:</b> ${locale === 'ar' ? 'Arabic site' : 'English site'}`,
       `🔖 <b>Ref:</b> ${ref}`,

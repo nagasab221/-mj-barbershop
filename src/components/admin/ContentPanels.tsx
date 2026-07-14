@@ -177,6 +177,30 @@ export function HoursPanel({ content, setContent }: PanelProps) {
         />
       </Panel>
 
+      <Panel
+        title="Venue & travel"
+        hint="Control mobile vs studio bookings and the travel fee for home visits outside your base area."
+      >
+        <Toggle
+          label="Studio open for booking (off = mobile only, studio shows “coming soon”)"
+          checked={Boolean(reservation.studioOpen)}
+          onChange={(studioOpen) => setReservation({ studioOpen })}
+        />
+        <LocaleInput
+          label="Base area (no travel fee), e.g. Al Shamkha"
+          value={reservation.areaName}
+          onChange={(areaName) => setReservation({ areaName })}
+        />
+        <FieldGrid>
+          <NumField
+            label="Travel fee outside base area (AED)"
+            value={reservation.travelFee}
+            onChange={(travelFee) => setReservation({ travelFee })}
+          />
+          <div />
+        </FieldGrid>
+      </Panel>
+
       <Panel title="Weekly working hours" hint="Times are 24h format. Booking slots are generated every 30 minutes between open and close.">
         <div className="space-y-3">
           {reservation.workingHours.map((h, i) => (

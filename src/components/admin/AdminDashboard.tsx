@@ -262,7 +262,12 @@ function BookingsPanel() {
                     </span>
                   </p>
                   {r.venue === 'home' && r.address && (
-                    <p className="mt-1.5 text-xs text-cream/60">📍 {r.address}</p>
+                    <p className="mt-1.5 text-xs text-cream/60">
+                      📍 {r.address}
+                      {r.area === 'outside' && (
+                        <span className="ms-2 text-brass">· outside base{r.travelFee > 0 ? ` (+AED ${r.travelFee})` : ''}</span>
+                      )}
+                    </p>
                   )}
                   <p className="mt-2 flex flex-wrap items-center gap-4 text-xs text-cream/50">
                     <a href={`tel:${r.phone}`} className="link-lux hover:text-cream">

@@ -21,7 +21,13 @@ export function supabase(): SupabaseClient {
       throw new Error('Supabase is not configured (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY).');
     }
     cached = createClient(url, key, {
-      auth: { persistSession: false, autoRefreshToken: false }
+      auth: { persistSession: false, autoRefreshToken: false },
+      // Always read fresh: the CMS promise is that /admin edits show on the
+      // next request. Without this, Next.js caches the REST fetch and serves
+      // stale content until a redeploy.
+      global: {
+        fetch: (input, init) => fetch(input, { ...init, cache: 'no-store' })
+      }
     });
   }
   return cached;

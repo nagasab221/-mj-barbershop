@@ -16,7 +16,15 @@ function bookService(id: string) {
   document.getElementById('reservations')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-export default function Services({ packages, locale }: { packages: Pkg[]; locale: Locale }) {
+export default function Services({
+  packages,
+  locale,
+  studioOpen
+}: {
+  packages: Pkg[];
+  locale: Locale;
+  studioOpen: boolean;
+}) {
   const t = useTranslations('services');
   const [active, setActive] = useState<'all' | PackageCategory>('all');
 
@@ -94,16 +102,18 @@ export default function Services({ packages, locale }: { packages: Pkg[]; locale
                   <span>{t(`categories.${pkg.category}`)}</span>
                   <span className="h-3 w-px bg-cream/15" aria-hidden />
                   <span className="flex items-center gap-1.5 text-brass/90">
-                    {pkg.venue === 'shop' ? (
-                      <StoreIcon className="h-3.5 w-3.5" />
-                    ) : (
+                    {!studioOpen || pkg.venue !== 'shop' ? (
                       <HomeIcon className="h-3.5 w-3.5" />
+                    ) : (
+                      <StoreIcon className="h-3.5 w-3.5" />
                     )}
-                    {pkg.venue === 'home'
+                    {!studioOpen
                       ? t('venueHome')
-                      : pkg.venue === 'shop'
-                        ? t('venueShop')
-                        : t('venueBoth')}
+                      : pkg.venue === 'home'
+                        ? t('venueHome')
+                        : pkg.venue === 'shop'
+                          ? t('venueShop')
+                          : t('venueBoth')}
                   </span>
                 </div>
 

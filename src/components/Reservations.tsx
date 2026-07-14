@@ -31,17 +31,7 @@ export default function Reservations({ content, locale }: { content: SiteContent
 
         <Reveal>
           <div className="dark-scheme mx-auto max-w-5xl border border-ink/10 bg-ink p-6 shadow-[0_30px_60px_-30px_rgba(10,10,10,0.5)] md:p-10">
-            <BookingTabs
-              services={services}
-              settings={{
-                heading: reservation.heading,
-                subheading: reservation.subheading,
-                workingHours: reservation.workingHours,
-                blockedDates: reservation.blockedDates
-              }}
-              whatsapp={site.whatsapp}
-              locale={locale}
-            />
+            <BookingTabs services={services} settings={reservation} whatsapp={site.whatsapp} locale={locale} />
           </div>
         </Reveal>
       </div>

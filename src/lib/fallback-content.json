@@ -5,16 +5,16 @@
       "ar": "الأناقة تصلك أينما كنت."
     },
     "heroEyebrow": {
-      "en": "Premium Mobile Barber · Dubai, UAE",
-      "ar": "حلّاق متنقّل فاخر · دبي، الإمارات"
+      "en": "Mobile Barber · Al Shamkha, Abu Dhabi",
+      "ar": "حلّاق متنقّل · الشمخة، أبوظبي"
     },
     "heroTitle": {
       "en": "The Art of the Perfect Cut",
       "ar": "فنّ الحلاقة كما يجب أن يكون"
     },
     "heroSubtitle": {
-      "en": "Classic craft, modern precision — at your door, or in our Jumeirah studio. Walk out sharper, wherever you are.",
-      "ar": "حرفة كلاسيكية بدقّة عصرية — نصل إلى باب بيتك، أو نستقبلك في صالوننا بجميرا. أناقتك، أينما كنت."
+      "en": "Classic craft, modern precision — brought to your door across Al Shamkha and greater Abu Dhabi. Walk out sharper, wherever you are.",
+      "ar": "حرفة كلاسيكية بدقّة عصرية — تصلك إلى باب منزلك في الشمخة وأنحاء أبوظبي. أناقتك، أينما كنت."
     },
     "aboutHeading": {
       "en": "A Tradition of Craft",
@@ -30,31 +30,31 @@
         "ar": "كل زيارة تبدأ بحوار قصير لفهم ذوقك، وتنتهي بإطلالة تشبهك تماماً. لا انتظار، ولا ضجيج، ولا حلول سريعة — حرفة صادقة، ومنتجات فاخرة، ووقت مخصّص لك وحدك."
       },
       {
-        "en": "Most of our clients never leave home: our barbers arrive with a complete mobile studio — sterilised tools, pressed capes, everything handled. Prefer to come to us? Our Jumeirah studio welcomes you daily.",
-        "ar": "معظم عملائنا لا يغادرون منازلهم: يصل حلّاقونا إليك بعدّة متكاملة — أدوات معقّمة وتجهيز كامل حتى آخر التفاصيل. وإن كنت تفضّل زيارتنا، فصالوننا في جميرا يستقبلك يومياً."
+        "en": "You never leave home: Zayed arrives with a complete mobile setup — sterilised tools, fresh capes, everything handled. All the calm of a private chair, in your own space, at a time that suits you.",
+        "ar": "لا تغادر منزلك: يصلك زايد بعدّة متكاملة — أدوات معقّمة وتجهيز كامل حتى آخر التفاصيل. كل هدوء الكرسي الخاص، في مساحتك، وفي الوقت الذي يناسبك."
       }
     ],
     "founderName": {
-      "en": "Mohammed J.",
-      "ar": "محمد ج."
+      "en": "Zayed Adnan",
+      "ar": "زايد عدنان"
     },
     "founderRole": {
-      "en": "Founder & Master Barber",
-      "ar": "المؤسس وكبير الحلّاقين"
+      "en": "Founder & Mobile Barber",
+      "ar": "المؤسس والحلّاق المتنقّل"
     },
     "founderBio": {
-      "en": "Trained between Istanbul, Beirut and Dubai, Mohammed has spent over twelve years perfecting the details other shops skip — and he trains every barber on our team in the same school of craft.",
-      "ar": "صقل محمد حرفته بين إسطنبول وبيروت ودبي على مدى أكثر من اثني عشر عاماً، متقناً التفاصيل التي يتجاوزها الآخرون — واليوم يدرّب كل حلّاق في فريقنا على المدرسة نفسها."
+      "en": "Zayed learned his craft in Iraq and has sharpened it on both sides of the Gulf — across Iraq and the UAE. He treats every appointment as his own chair to perfect, brought right to your door in Al Shamkha and around Abu Dhabi.",
+      "ar": "تعلّم زايد الحرفة في العراق وصقلها على ضفّتي الخليج — بين العراق والإمارات. يتعامل مع كل موعد وكأنه كرسيّه الخاص يتقنه بأدق تفاصيله، ويصل به إلى باب منزلك في الشمخة وأنحاء أبوظبي."
     },
     "stats": [
-      { "value": "12+", "label": { "en": "Years of Craft", "ar": "عاماً من الحِرفة" } },
-      { "value": "15,000+", "label": { "en": "Happy Clients", "ar": "عميل سعيد" } },
-      { "value": "4.9", "label": { "en": "Google Rating", "ar": "تقييم جوجل" } },
-      { "value": "6", "label": { "en": "Master Barbers", "ar": "حلّاقون محترفون" } }
+      { "value": "50+", "label": { "en": "Clients Served", "ar": "عميل خدمناه" } },
+      { "value": "2", "label": { "en": "Countries of Craft", "ar": "بلدا الخبرة" } },
+      { "value": "100%", "label": { "en": "At Your Door", "ar": "خدمة تصلك" } },
+      { "value": "7 Days", "label": { "en": "A Week", "ar": "أيام الأسبوع" } }
     ],
-    "phone": "+971501234567",
-    "whatsapp": "971501234567",
-    "email": "book@mjbarbershop.ae",
+    "phone": "+971544385290",
+    "whatsapp": "971544385290",
+    "email": "zayedadnan7777@gmail.com",
     "instagram": "https://instagram.com/mjbarbershop.ae",
     "tiktok": "https://tiktok.com/@mjbarbershop.ae"
   },
@@ -64,9 +64,15 @@
       "ar": "احجز كرسيّك"
     },
     "subheading": {
-      "en": "Pick your service, choose home visit or studio, and we confirm on WhatsApp within minutes.",
-      "ar": "اختر خدمتك، وحدّد زيارة منزلية أو في الصالون، ونؤكد حجزك عبر واتساب خلال دقائق."
+      "en": "Pick your service, tell us where you are, and we confirm on WhatsApp within minutes. We come to you across Abu Dhabi.",
+      "ar": "اختر خدمتك، أخبرنا أين أنت، ونؤكد حجزك عبر واتساب خلال دقائق. نصل إليك في أنحاء أبوظبي."
     },
+    "studioOpen": false,
+    "areaName": {
+      "en": "Al Shamkha",
+      "ar": "الشمخة"
+    },
+    "travelFee": 20,
     "workingHours": [
       { "day": "saturday", "closed": false, "open": "10:00", "close": "22:00" },
       { "day": "sunday", "closed": false, "open": "10:00", "close": "22:00" },
@@ -80,15 +86,15 @@
   },
   "location": {
     "address": {
-      "en": "Al Wasl Road, Villa 24, Jumeirah 1, Dubai, United Arab Emirates",
-      "ar": "شارع الوصل، فيلا 24، جميرا 1، دبي، الإمارات العربية المتحدة"
+      "en": "Al Shamkha, Abu Dhabi, United Arab Emirates",
+      "ar": "الشمخة، أبوظبي، الإمارات العربية المتحدة"
     },
     "hoursText": {
       "en": "Sat – Thu: 10 AM – 10 PM · Fri: 2 PM – 10 PM",
       "ar": "السبت – الخميس: 10 صباحاً – 10 مساءً · الجمعة: 2 ظهراً – 10 مساءً"
     },
-    "lat": 25.2323,
-    "lng": 55.2603
+    "lat": 24.3969837,
+    "lng": 54.6985379
   },
   "packages": [
     {

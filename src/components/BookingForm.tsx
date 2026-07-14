@@ -6,7 +6,7 @@ import Calendar from '@/components/Calendar';
 import { CheckIcon, ClockIcon, HomeIcon, StoreIcon, WhatsAppIcon } from '@/components/Icons';
 import { formatSlot, isBlocked, normalizeUAEPhone, slotsForDate } from '@/lib/booking';
 import { formatDate, formatPrice, whatsappLink } from '@/lib/utils';
-import type { Locale, ReservationSettings, Venue } from '@/lib/types';
+import { t as pick, type Locale, type ReservationSettings, type Venue } from '@/lib/types';
 
 export interface ServiceOption {
   id: string;
@@ -37,6 +37,7 @@ export default function BookingForm({
   const [phone, setPhone] = useState('');
   const [serviceId, setServiceId] = useState('');
   const [venueChoice, setVenueChoice] = useState<'home' | 'shop'>('home');
+  const [area, setArea] = useState<'inside' | 'outside'>('inside');
   const [address, setAddress] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -46,13 +47,25 @@ export default function BookingForm({
   const [status, setStatus] = useState<Status>('idle');
   const [reference, setReference] = useState('');
 
+  const studioOpen = settings.studioOpen;
+  const areaName = pick(settings.areaName, locale);
+  const travelFee = settings.travelFee || 0;
+
   const selected = services.find((s) => s.id === serviceId) ?? null;
-  /** Effective venue: fixed by the package unless it supports both. */
-  const venue: 'home' | 'shop' = !selected
-    ? venueChoice
-    : selected.venue === 'both'
+  /**
+   * Effective venue. While the studio is "coming soon" every booking is a
+   * home visit; otherwise it's fixed by the package unless it supports both.
+   */
+  const venue: 'home' | 'shop' = !studioOpen
+    ? 'home'
+    : !selected
       ? venueChoice
-      : selected.venue;
+      : selected.venue === 'both'
+        ? venueChoice
+        : selected.venue;
+
+  const appliedFee = venue === 'home' && area === 'outside' ? travelFee : 0;
+  const total = selected ? selected.price + appliedFee : 0;
 
   const slots = useMemo(() => (date ? slotsForDate(settings, date) : []), [settings, date]);
 
@@ -106,6 +119,7 @@ export default function BookingForm({
           date,
           time,
           venue,
+          area,
           address: venue === 'home' ? address.trim() : '',
           notes: notes.trim(),
           locale,
@@ -129,6 +143,7 @@ export default function BookingForm({
     setPhone('');
     setServiceId('');
     setVenueChoice('home');
+    setArea('inside');
     setAddress('');
     setDate('');
     setTime('');
@@ -247,8 +262,20 @@ export default function BookingForm({
                       {ts('mins', { count: s.duration })}
                     </span>
                     <span className="flex items-center gap-1">
-                      {s.venue === 'shop' ? <StoreIcon className="h-3 w-3" /> : <HomeIcon className="h-3 w-3" />}
-                      {s.venue === 'home' ? ts('venueHome') : s.venue === 'shop' ? ts('venueShop') : ts('venueBoth')}
+                      {!studioOpen || s.venue === 'home' ? (
+                        <HomeIcon className="h-3 w-3" />
+                      ) : s.venue === 'shop' ? (
+                        <StoreIcon className="h-3 w-3" />
+                      ) : (
+                        <HomeIcon className="h-3 w-3" />
+                      )}
+                      {!studioOpen
+                        ? ts('venueHome')
+                        : s.venue === 'home'
+                          ? ts('venueHome')
+                          : s.venue === 'shop'
+                            ? ts('venueShop')
+                            : ts('venueBoth')}
                     </span>
                   </span>
                 </button>
@@ -261,7 +288,28 @@ export default function BookingForm({
         {/* Venue */}
         <div>
           <span className="field-label">{t('venue')}</span>
-          {selected && selected.venue !== 'both' ? (
+          {!studioOpen ? (
+            // Studio "coming soon": home is the only bookable venue.
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="flex items-center gap-4 border border-brass bg-brass/10 p-4">
+                <HomeIcon className="h-6 w-6 shrink-0 text-brass" />
+                <span>
+                  <span className="block text-sm font-semibold text-brass">{t('venueHome')}</span>
+                  <span className="mt-0.5 block text-xs text-cream/50">{t('venueHomeHint')}</span>
+                </span>
+              </div>
+              <div className="relative flex items-center gap-4 border border-cream/10 bg-ink-800/30 p-4 opacity-60">
+                <StoreIcon className="h-6 w-6 shrink-0 text-cream/40" />
+                <span>
+                  <span className="block text-sm font-semibold text-cream/60">{t('venueShop')}</span>
+                  <span className="mt-0.5 block text-xs text-cream/40">{t('venueShopHint')}</span>
+                </span>
+                <span className="absolute end-3 top-3 border border-brass/40 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-brass">
+                  {t('studioComingSoon')}
+                </span>
+              </div>
+            </div>
+          ) : selected && selected.venue !== 'both' ? (
             <p className="flex items-center gap-2.5 border border-cream/15 bg-ink-800/40 px-4 py-3 text-sm text-cream/85">
               {selected.venue === 'home' ? (
                 <HomeIcon className="h-4 w-4 text-brass" />
@@ -303,21 +351,67 @@ export default function BookingForm({
           )}
 
           {venue === 'home' && (
-            <div className="mt-5">
-              <label htmlFor="bk-address" className="field-label">
-                {t('address')}
-              </label>
-              <textarea
-                id="bk-address"
-                rows={2}
-                className="field resize-none"
-                placeholder={t('addressPlaceholder')}
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                maxLength={300}
-              />
-              {err('address')}
-            </div>
+            <>
+              {/* Area — drives the travel fee */}
+              <div className="mt-5">
+                <span className="field-label">{t('areaLabel')}</span>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {(
+                    [
+                      {
+                        a: 'inside' as const,
+                        label: t('areaInside', { area: areaName }),
+                        hint: t('areaInsideHint'),
+                        badge: ''
+                      },
+                      {
+                        a: 'outside' as const,
+                        label: t('areaOutside', { area: areaName }),
+                        hint: t('areaOutsideHint'),
+                        badge: travelFee > 0 ? `+AED ${travelFee}` : ''
+                      }
+                    ]
+                  ).map(({ a, label, hint, badge }) => {
+                    const active = area === a;
+                    return (
+                      <button
+                        key={a}
+                        type="button"
+                        onClick={() => setArea(a)}
+                        aria-pressed={active}
+                        className={`flex items-center justify-between gap-3 border p-4 text-start transition-all duration-300 ${
+                          active ? 'border-brass bg-brass/10' : 'border-cream/15 bg-ink-800/40 hover:border-brass/50'
+                        }`}
+                      >
+                        <span>
+                          <span className={`block text-sm font-semibold ${active ? 'text-brass' : 'text-cream'}`}>
+                            {label}
+                          </span>
+                          <span className="mt-0.5 block text-xs text-cream/50">{hint}</span>
+                        </span>
+                        {badge && <span className="ltr-embed shrink-0 text-xs font-semibold text-brass">{badge}</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <label htmlFor="bk-address" className="field-label">
+                  {t('address')}
+                </label>
+                <textarea
+                  id="bk-address"
+                  rows={2}
+                  className="field resize-none"
+                  placeholder={t('addressPlaceholder')}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  maxLength={300}
+                />
+                {err('address')}
+              </div>
+            </>
           )}
         </div>
 
@@ -423,12 +517,18 @@ export default function BookingForm({
                 )}
               </dd>
             </div>
+            {selected && appliedFee > 0 && (
+              <div className="flex items-start justify-between gap-4 border-b border-cream/10 pb-3.5">
+                <dt className="text-cream/50">{t('sTravel')}</dt>
+                <dd className="ltr-embed font-medium text-cream">+ {formatPrice(appliedFee, locale)}</dd>
+              </div>
+            )}
           </dl>
 
           <div className="mt-5 flex items-baseline justify-between">
             <span className="font-display text-lg text-cream">{t('sTotal')}</span>
             <span className="ltr-embed font-display text-xl text-brass">
-              {selected ? formatPrice(selected.price, locale, selected.startingFrom) : '—'}
+              {selected ? formatPrice(total, locale, selected.startingFrom) : '—'}
             </span>
           </div>
 

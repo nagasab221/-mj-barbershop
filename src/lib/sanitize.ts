@@ -102,13 +102,16 @@ export function sanitizeContent(input: unknown): SiteContent {
         const date = str(o.date, 10);
         if (!DATE_RE.test(date)) return null;
         return { date, reason: str(o.reason, 120) || undefined };
-      })
+      }),
+      studioOpen: Boolean(reservation.studioOpen),
+      areaName: loc(reservation.areaName, 80),
+      travelFee: num(reservation.travelFee, 0, 100000, 0)
     },
     location: {
       address: loc(location.address, 500),
       hoursText: loc(location.hoursText, 200),
-      lat: num(location.lat, -90, 90, 25.2323),
-      lng: num(location.lng, -180, 180, 55.2603)
+      lat: num(location.lat, -90, 90, 24.3969837),
+      lng: num(location.lng, -180, 180, 54.6985379)
     },
     packages: arr(raw.packages, 100, (p) => {
       const o = (p ?? {}) as Record<string, unknown>;

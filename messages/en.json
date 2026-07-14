@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "MJ Barbershop — Premium Barbershop in Dubai",
-    "description": "Classic cuts, hot towel shaves and VIP grooming in the heart of Dubai. Book your chair at MJ Barbershop — where craft meets precision."
+    "title": "MJ Barbershop — Mobile Barber in Abu Dhabi",
+    "description": "Premium mobile barber serving Al Shamkha and Abu Dhabi. Classic cuts, beard work and hot-towel shaves — brought to your door. Book on WhatsApp."
   },
   "nav": {
     "about": "About",
@@ -78,7 +78,14 @@
     "venueHome": "Home visit",
     "venueHomeHint": "We come to you",
     "venueShop": "At the studio",
-    "venueShopHint": "Jumeirah, Dubai",
+    "venueShopHint": "Al Shamkha, Abu Dhabi",
+    "studioComingSoon": "Coming soon",
+    "areaLabel": "Your location",
+    "areaInside": "Inside {area}",
+    "areaInsideHint": "No travel fee",
+    "areaOutside": "Outside {area}",
+    "areaOutsideHint": "Small travel fee",
+    "sTravel": "Travel fee",
     "address": "Your address",
     "addressPlaceholder": "Area, street, villa / apartment…",
     "pickDay": "Pick a day",
@@ -129,8 +136,8 @@
   },
   "location": {
     "eyebrow": "Visit Us",
-    "heading": "Find Us",
-    "subheading": "In the heart of Jumeirah — easy parking, easier directions.",
+    "heading": "Where We Serve",
+    "subheading": "Based in Al Shamkha — we come to you across Abu Dhabi.",
     "address": "Address",
     "hours": "Working hours",
     "phone": "Phone",
@@ -177,6 +184,6 @@
     "hours": "Working Hours",
     "contact": "Contact",
     "rights": "All rights reserved.",
-    "crafted": "Crafted with precision in Dubai"
+    "crafted": "Crafted with precision in Abu Dhabi"
   }
 }

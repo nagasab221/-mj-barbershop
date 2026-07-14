@@ -39,6 +39,8 @@ interface ReservationRow {
   notes: string;
   venue?: string;
   address?: string;
+  area?: string;
+  travel_fee?: number;
   locale: string;
   status: ReservationStatus;
   created_at: string;
@@ -57,6 +59,8 @@ function rowToReservation(row: ReservationRow): StoredReservation {
     notes: row.notes,
     venue: row.venue === 'home' ? 'home' : 'shop',
     address: row.address ?? '',
+    area: row.area === 'outside' ? 'outside' : 'inside',
+    travelFee: typeof row.travel_fee === 'number' ? row.travel_fee : 0,
     locale: (row.locale === 'ar' ? 'ar' : 'en') as Locale,
     status: row.status,
     createdAt: row.created_at
@@ -74,7 +78,10 @@ function normalizeContent(raw: Partial<SiteContent> | null): SiteContent {
     workingHours: raw.reservation?.workingHours?.length
       ? raw.reservation.workingHours
       : FALLBACK.reservation.workingHours,
-    blockedDates: raw.reservation?.blockedDates ?? []
+    blockedDates: raw.reservation?.blockedDates ?? [],
+    studioOpen: raw.reservation?.studioOpen ?? FALLBACK.reservation.studioOpen,
+    areaName: raw.reservation?.areaName ?? FALLBACK.reservation.areaName,
+    travelFee: raw.reservation?.travelFee ?? FALLBACK.reservation.travelFee
   };
   return {
     site: { ...FALLBACK.site, ...raw.site },
@@ -146,18 +153,29 @@ export async function addReservation(
 
   let { data, error } = await supabase()
     .from('reservations')
-    .insert({ ...base, venue: input.venue, address: input.address })
+    .insert({
+      ...base,
+      venue: input.venue,
+      address: input.address,
+      area: input.area,
+      travel_fee: input.travelFee
+    })
     .select('*')
     .single();
 
-  // Graceful pre-migration fallback: if the venue/address columns don't exist
-  // yet (supabase/migration-home-visits.sql not run), fold them into notes so
-  // no booking is ever lost.
-  if (error && /venue|address/i.test(error.message)) {
-    const venueNote = input.venue === 'home' ? `[Home visit] ${input.address}` : '[Studio]';
+  // Graceful pre-migration fallback: if the venue/address/area/travel_fee
+  // columns don't exist yet (supabase/migration-home-visits.sql not run),
+  // fold them into notes so no booking is ever lost.
+  if (error && /venue|address|area|travel_fee|column/i.test(error.message)) {
+    const parts = [
+      input.venue === 'home' ? `[Home visit] ${input.address}` : '[Studio]',
+      input.venue === 'home' ? (input.area === 'outside' ? 'Outside area' : 'Inside area') : '',
+      input.travelFee > 0 ? `Travel +AED ${input.travelFee}` : '',
+      input.notes
+    ].filter(Boolean);
     ({ data, error } = await supabase()
       .from('reservations')
-      .insert({ ...base, notes: [venueNote, input.notes].filter(Boolean).join(' — ') })
+      .insert({ ...base, notes: parts.join(' — ') })
       .select('*')
       .single());
   }

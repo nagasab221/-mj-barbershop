@@ -81,7 +81,15 @@ export interface ReservationSettings {
   subheading: L;
   workingHours: DayHours[];
   blockedDates: BlockedDate[];
+  /** When false, the studio venue shows as "coming soon" and all bookings are home visits. */
+  studioOpen: boolean;
+  /** The home base area with no travel fee (e.g. "Al Shamkha"). */
+  areaName: L;
+  /** AED added to a home visit outside `areaName`. */
+  travelFee: number;
 }
+
+export type BookingArea = 'inside' | 'outside';
 
 export interface LocationInfo {
   address: L;
@@ -122,6 +130,10 @@ export interface StoredReservation {
   venue: Exclude<Venue, 'both'>;
   /** Client address for home visits (empty for studio bookings). */
   address: string;
+  /** Whether the home visit is inside or outside the no-fee area. */
+  area: BookingArea;
+  /** Travel fee applied to this booking (AED, 0 when inside the area or at the studio). */
+  travelFee: number;
   locale: Locale;
   status: ReservationStatus;
   createdAt: string; // ISO datetime

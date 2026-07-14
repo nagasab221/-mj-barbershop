@@ -38,7 +38,7 @@ function buildJsonLd(content: SiteContent, locale: Locale) {
   const { site, location, reservation } = content;
   return {
     '@context': 'https://schema.org',
-    '@type': 'BarberShop',
+    '@type': 'HairSalon',
     name: 'MJ Barbershop',
     description: pick(site.heroSubtitle, locale),
     url: `${SITE_URL}/${locale}`,
@@ -48,7 +48,8 @@ function buildJsonLd(content: SiteContent, locale: Locale) {
     address: {
       '@type': 'PostalAddress',
       streetAddress: pick(location.address, locale),
-      addressLocality: 'Dubai',
+      addressLocality: 'Al Shamkha',
+      addressRegion: 'Abu Dhabi',
       addressCountry: 'AE'
     },
     geo: {
@@ -56,6 +57,8 @@ function buildJsonLd(content: SiteContent, locale: Locale) {
       latitude: location.lat,
       longitude: location.lng
     },
+    areaServed: { '@type': 'City', name: 'Abu Dhabi' },
+    availableService: { '@type': 'Service', serviceType: 'Mobile barber — home visits' },
     openingHoursSpecification: reservation.workingHours
       .filter((h) => !h.closed && h.open && h.close)
       .map((h) => ({
@@ -85,7 +88,7 @@ export default async function HomePage({
       <main>
         <Hero site={content.site} locale={loc} />
         <About site={content.site} locale={loc} />
-        <Services packages={content.packages} locale={loc} />
+        <Services packages={content.packages} locale={loc} studioOpen={content.reservation.studioOpen} />
         <Reservations content={content} locale={loc} />
         <LocationSection location={content.location} site={content.site} locale={loc} />
         <Gallery items={content.gallery} locale={loc} />
