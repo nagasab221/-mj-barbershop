@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "title": "MJ Barbershop — Premium Barbershop in Dubai",
+    "description": "Classic cuts, hot towel shaves and VIP grooming in the heart of Dubai. Book your chair at MJ Barbershop — where craft meets precision."
+  },
+  "nav": {
+    "about": "About",
+    "services": "Services",
+    "reservations": "Book",
+    "location": "Location",
+    "gallery": "Gallery",
+    "testimonials": "Reviews",
+    "contact": "Contact",
+    "bookNow": "Book Now",
+    "menu": "Open menu",
+    "close": "Close menu",
+    "switchLocale": "العربية"
+  },
+  "hero": {
+    "bookNow": "Book Now",
+    "whatsapp": "WhatsApp Us",
+    "scroll": "Scroll"
+  },
+  "about": {
+    "eyebrow": "Our Story"
+  },
+  "services": {
+    "eyebrow": "Services & Pricing",
+    "heading": "Services & Pricing",
+    "subheading": "Transparent pricing, no surprises — just great work.",
+    "all": "All",
+    "categories": {
+      "hair": "Hair",
+      "beard": "Beard",
+      "combo": "Combos",
+      "kids": "Kids",
+      "vip": "VIP",
+      "addon": "Add-ons"
+    },
+    "popular": "Most Popular",
+    "mins": "{count} min",
+    "book": "Book this service"
+  },
+  "booking": {
+    "eyebrow": "Reservations",
+    "name": "Full name",
+    "namePlaceholder": "Your name",
+    "phone": "Phone (UAE)",
+    "phonePlaceholder": "05x xxx xxxx",
+    "service": "Service",
+    "servicePlaceholder": "Choose a service…",
+    "date": "Preferred date",
+    "time": "Preferred time",
+    "timePlaceholder": "Pick a time…",
+    "noSlots": "We're closed that day — please pick another date.",
+    "notes": "Notes (optional)",
+    "notesPlaceholder": "Anything we should know?",
+    "submit": "Confirm Booking",
+    "submitting": "Sending…",
+    "successTitle": "Booking received",
+    "successBody": "Thank you — we'll confirm your appointment shortly on WhatsApp.",
+    "reference": "Booking reference",
+    "bookAnother": "Make another booking",
+    "errorTitle": "Something went wrong",
+    "errorBody": "Your booking didn't go through. Please try again — or book directly on WhatsApp.",
+    "whatsappAlt": "Book via WhatsApp",
+    "errRequired": "Required",
+    "errName": "Please enter your name",
+    "errPhone": "Enter a valid UAE mobile (05x xxx xxxx)",
+    "errService": "Choose a service",
+    "errDate": "Pick a valid date",
+    "errTime": "Pick a time"
+  },
+  "location": {
+    "eyebrow": "Visit Us",
+    "heading": "Find Us",
+    "subheading": "In the heart of Jumeirah — easy parking, easier directions.",
+    "address": "Address",
+    "hours": "Working hours",
+    "phone": "Phone",
+    "directions": "Get Directions",
+    "mapTitle": "MJ Barbershop on Google Maps"
+  },
+  "gallery": {
+    "eyebrow": "Portfolio",
+    "heading": "The Work",
+    "subheading": "A few recent cuts from our chairs.",
+    "close": "Close",
+    "prev": "Previous image",
+    "next": "Next image"
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "heading": "Word Around Town",
+    "subheading": "What our clients say about us.",
+    "stars": "{count} out of 5 stars"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "heading": "Get in Touch",
+    "subheading": "Questions, group bookings, or just want to say hello — we're one message away.",
+    "call": "Call us",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "follow": "Follow us",
+    "formName": "Name",
+    "formNamePlaceholder": "Your name",
+    "formContact": "Phone or email",
+    "formContactPlaceholder": "How do we reach you?",
+    "formMessage": "Message",
+    "formMessagePlaceholder": "Write your message…",
+    "send": "Send Message",
+    "sending": "Sending…",
+    "sent": "Message sent — we'll get back to you soon.",
+    "error": "Couldn't send your message. Please try WhatsApp instead.",
+    "errMessage": "Please write a message"
+  },
+  "footer": {
+    "blurb": "A premium barbershop in Dubai. Classic craft, modern precision.",
+    "links": "Quick Links",
+    "hours": "Working Hours",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "crafted": "Crafted with precision in Dubai"
+  }
+}

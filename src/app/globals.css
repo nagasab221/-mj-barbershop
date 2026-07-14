@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   MJ Barbershop — "Elegant Barbershop, Black & White"
+   Ink (#0a0a0a) · Cream (#f5f3ef) · Brass accent (#c9a86a)
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --ink: #0a0a0a;
+  --cream: #f5f3ef;
+  --brass: #c9a86a;
+  /* Latin defaults; swapped for Arabic below. */
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-inter);
+}
+
+/* Arabic pages: Tajawal carries both headings and body. */
+html[lang='ar'] {
+  --font-heading: var(--font-tajawal);
+  --font-body: var(--font-tajawal);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-cream antialiased;
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Anchored sections need breathing room under the fixed header. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--ink);
+}
+
+/* Slim, unobtrusive scrollbar (WebKit) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brass);
+}
+
+/* Wide letterspacing is a Latin luxury — tame it for connected Arabic script. */
+html[lang='ar'] .tracking-luxe {
+  letter-spacing: 0.02em;
+}
+html[lang='ar'] .tracking-widest,
+html[lang='ar'] .tracking-wider {
+  letter-spacing: 0.01em;
+}
+
+/* Keep phone numbers and latin fragments readable inside RTL text. */
+.ltr-embed {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+@layer components {
+  /* Vertical pinstripes — barely-there tailoring texture. */
+  .pinstripes-light {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(245, 243, 239, 0.04) 0px,
+      rgba(245, 243, 239, 0.04) 1px,
+      transparent 1px,
+      transparent 26px
+    );
+  }
+  .pinstripes-dark {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(10, 10, 10, 0.045) 0px,
+      rgba(10, 10, 10, 0.045) 1px,
+      transparent 1px,
+      transparent 26px
+    );
+  }
+
+  /* Film-grain overlay for the hero — keeps the monochrome from feeling flat. */
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Buttons — sharp corners, slow elegant transitions. */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs font-semibold uppercase tracking-luxe transition-all duration-500 ease-elegant;
+  }
+  .btn-brass {
+    @apply btn bg-brass text-ink hover:bg-cream;
+  }
+  .btn-outline-cream {
+    @apply btn border border-cream/30 text-cream hover:border-brass hover:text-brass;
+  }
+  .btn-outline-ink {
+    @apply btn border border-ink/30 text-ink hover:border-brass hover:bg-brass/10;
+  }
+
+  /* Editorial "line" form fields on the dark booking card. */
+  .field {
+    @apply w-full border-0 border-b border-cream/20 bg-transparent px-0 py-3 text-base text-cream outline-none transition-colors duration-500 placeholder:text-cream/30 focus:border-brass;
+  }
+  .field-label {
+    @apply mb-1 block text-[11px] font-semibold uppercase tracking-luxe text-cream/60;
+  }
+  select.field {
+    @apply cursor-pointer appearance-none;
+  }
+  select.field option {
+    @apply bg-ink-800 text-cream;
+  }
+
+  /* Underline-on-hover link animation. */
+  .link-lux {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-lux:hover {
+    background-size: 100% 1px;
+  }
+  html[dir='rtl'] .link-lux {
+    background-position: 100% 100%;
+  }
+}
+
+/* Scroll-triggered reveal (driven by the <Reveal> component). */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-slow-drift,
+  .animate-fade-up {
+    animation: none;
+  }
+}
+
+/* Native date/time pickers should match the dark booking card. */
+.dark-scheme {
+  color-scheme: dark;
+}

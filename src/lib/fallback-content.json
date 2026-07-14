@@ -1,0 +1,282 @@
+{
+  "site": {
+    "tagline": {
+      "en": "Grooming, elevated.",
+      "ar": "حيث تكتمل الأناقة."
+    },
+    "heroEyebrow": {
+      "en": "Premium Barbershop · Dubai, UAE",
+      "ar": "صالون حلاقة فاخر · دبي، الإمارات"
+    },
+    "heroTitle": {
+      "en": "The Art of the Perfect Cut",
+      "ar": "فنّ الحلاقة كما يجب أن يكون"
+    },
+    "heroSubtitle": {
+      "en": "Classic craft, modern precision. Walk out sharper — every single time.",
+      "ar": "حرفة كلاسيكية بدقّة عصرية. اخرج من عندنا بإطلالة أكثر أناقة — في كل زيارة."
+    },
+    "aboutHeading": {
+      "en": "A Tradition of Craft",
+      "ar": "حكاية حِرفة وشغف"
+    },
+    "aboutBody": [
+      {
+        "en": "MJ Barbershop was built on a simple belief: a great cut is never rushed. In our chairs, classic barbering — the scissor work, the straight razor, the hot towel — meets the standards of a city that expects the best.",
+        "ar": "انطلق «إم جيه باربرشوب» من قناعة بسيطة: الإطلالة المميزة لا تُستعجل. على كراسينا تلتقي أصول الحلاقة الكلاسيكية — من المقص إلى الموس والمنشفة الساخنة — بمعايير مدينة اعتادت على الأفضل."
+      },
+      {
+        "en": "Every visit begins with a conversation and ends with a look that is unmistakably yours. No queues, no noise, no shortcuts — just honest craft, premium products, and time set aside for you.",
+        "ar": "كل زيارة تبدأ بحوار قصير لفهم ذوقك، وتنتهي بإطلالة تشبهك تماماً. لا انتظار، ولا ضجيج، ولا حلول سريعة — حرفة صادقة، ومنتجات فاخرة، ووقت مخصّص لك وحدك."
+      }
+    ],
+    "founderName": {
+      "en": "Mohammed J.",
+      "ar": "محمد ج."
+    },
+    "founderRole": {
+      "en": "Founder & Master Barber",
+      "ar": "المؤسس وكبير الحلّاقين"
+    },
+    "founderBio": {
+      "en": "Trained between Istanbul, Beirut and Dubai, Mohammed has spent over twelve years perfecting the details other shops skip — and he trains every barber on our team in the same school of craft.",
+      "ar": "صقل محمد حرفته بين إسطنبول وبيروت ودبي على مدى أكثر من اثني عشر عاماً، متقناً التفاصيل التي يتجاوزها الآخرون — واليوم يدرّب كل حلّاق في فريقنا على المدرسة نفسها."
+    },
+    "stats": [
+      { "value": "12+", "label": { "en": "Years of Craft", "ar": "عاماً من الحِرفة" } },
+      { "value": "15,000+", "label": { "en": "Happy Clients", "ar": "عميل سعيد" } },
+      { "value": "4.9", "label": { "en": "Google Rating", "ar": "تقييم جوجل" } },
+      { "value": "6", "label": { "en": "Master Barbers", "ar": "حلّاقون محترفون" } }
+    ],
+    "phone": "+971501234567",
+    "whatsapp": "971501234567",
+    "email": "book@mjbarbershop.ae",
+    "instagram": "https://instagram.com/mjbarbershop.ae",
+    "tiktok": "https://tiktok.com/@mjbarbershop.ae"
+  },
+  "reservation": {
+    "heading": {
+      "en": "Reserve Your Chair",
+      "ar": "احجز كرسيّك"
+    },
+    "subheading": {
+      "en": "Choose your service and time — we confirm within minutes on WhatsApp.",
+      "ar": "اختر الخدمة والوقت المناسب، ونؤكد حجزك عبر واتساب خلال دقائق."
+    },
+    "workingHours": [
+      { "day": "saturday", "closed": false, "open": "10:00", "close": "22:00" },
+      { "day": "sunday", "closed": false, "open": "10:00", "close": "22:00" },
+      { "day": "monday", "closed": false, "open": "10:00", "close": "22:00" },
+      { "day": "tuesday", "closed": false, "open": "10:00", "close": "22:00" },
+      { "day": "wednesday", "closed": false, "open": "10:00", "close": "22:00" },
+      { "day": "thursday", "closed": false, "open": "10:00", "close": "22:00" },
+      { "day": "friday", "closed": false, "open": "14:00", "close": "22:00" }
+    ],
+    "blockedDates": []
+  },
+  "location": {
+    "address": {
+      "en": "Al Wasl Road, Villa 24, Jumeirah 1, Dubai, United Arab Emirates",
+      "ar": "شارع الوصل، فيلا 24، جميرا 1، دبي، الإمارات العربية المتحدة"
+    },
+    "hoursText": {
+      "en": "Sat – Thu: 10 AM – 10 PM · Fri: 2 PM – 10 PM",
+      "ar": "السبت – الخميس: 10 صباحاً – 10 مساءً · الجمعة: 2 ظهراً – 10 مساءً"
+    },
+    "lat": 25.2323,
+    "lng": 55.2603
+  },
+  "packages": [
+    {
+      "id": "pkg-classic-cut",
+      "name": { "en": "Classic Haircut", "ar": "قصة شعر كلاسيكية" },
+      "price": 60,
+      "startingFrom": false,
+      "duration": 45,
+      "description": {
+        "en": "Precision scissor and clipper work tailored to you, finished with a wash and hot towel.",
+        "ar": "قصة مضبوطة بالمقص والماكينة حسب ذوقك، مع غسيل الشعر وتشطيب بالمنشفة الساخنة."
+      },
+      "category": "hair",
+      "popular": false,
+      "image": null
+    },
+    {
+      "id": "pkg-beard-trim",
+      "name": { "en": "Beard Trim & Shape", "ar": "تهذيب وتحديد اللحية" },
+      "price": 40,
+      "startingFrom": false,
+      "duration": 30,
+      "description": {
+        "en": "Sharp lines and perfect symmetry, finished with beard oil and a hot towel.",
+        "ar": "خطوط حادّة وتناسق مثالي، مع زيت اللحية وتشطيب بالمنشفة الساخنة."
+      },
+      "category": "beard",
+      "popular": false,
+      "image": null
+    },
+    {
+      "id": "pkg-signature-combo",
+      "name": { "en": "Signature Cut & Beard", "ar": "الباقة المميّزة: شعر + لحية" },
+      "price": 90,
+      "startingFrom": false,
+      "duration": 75,
+      "description": {
+        "en": "Our most requested ritual — a tailored haircut with a full beard sculpt and premium finish.",
+        "ar": "طقسنا الأكثر طلباً — قصة متقنة مع تهذيب كامل للحية ولمسة نهائية فاخرة."
+      },
+      "category": "combo",
+      "popular": true,
+      "image": null
+    },
+    {
+      "id": "pkg-hot-towel-shave",
+      "name": { "en": "Traditional Hot Towel Shave", "ar": "حلاقة كلاسيكية بالموس" },
+      "price": 55,
+      "startingFrom": false,
+      "duration": 40,
+      "description": {
+        "en": "The classic straight-razor shave: hot towels, rich lather and a cooling balm.",
+        "ar": "حلاقة تقليدية بالموس: كمّادات ساخنة، ورغوة غنية، وبلسم مهدّئ للبشرة."
+      },
+      "category": "beard",
+      "popular": false,
+      "image": null
+    },
+    {
+      "id": "pkg-kids-cut",
+      "name": { "en": "Kids Cut (under 12)", "ar": "قصة أطفال (دون 12 سنة)" },
+      "price": 40,
+      "startingFrom": false,
+      "duration": 30,
+      "description": {
+        "en": "A patient, friendly cut for young gentlemen — first-visit certificates included.",
+        "ar": "قصة مريحة بأجواء ودودة لصغار الرجال — مع شهادة تذكارية لأول زيارة."
+      },
+      "category": "kids",
+      "popular": false,
+      "image": null
+    },
+    {
+      "id": "pkg-executive",
+      "name": { "en": "The Executive", "ar": "باقة الإكزكيوتيف VIP" },
+      "price": 180,
+      "startingFrom": false,
+      "duration": 90,
+      "description": {
+        "en": "The full ritual: haircut, straight-razor shave, express facial and head massage. Ninety minutes, entirely yours.",
+        "ar": "التجربة الكاملة: قصة شعر، حلاقة بالموس، تنظيف سريع للبشرة ومساج للرأس. تسعون دقيقة خالصة لك."
+      },
+      "category": "vip",
+      "popular": false,
+      "image": null
+    },
+    {
+      "id": "pkg-hair-treatment",
+      "name": { "en": "Hair Treatment", "ar": "جلسة علاج للشعر" },
+      "price": 150,
+      "startingFrom": true,
+      "duration": 60,
+      "description": {
+        "en": "Protein or keratin, matched to your hair's needs — for a healthy, polished finish.",
+        "ar": "بروتين أو كيراتين حسب حاجة شعرك — لنتيجة صحية ولمعان طبيعي."
+      },
+      "category": "addon",
+      "popular": false,
+      "image": null
+    },
+    {
+      "id": "pkg-black-mask",
+      "name": { "en": "Facial & Black Mask", "ar": "تنظيف بشرة بالماسك الأسود" },
+      "price": 50,
+      "startingFrom": false,
+      "duration": 25,
+      "description": {
+        "en": "A deep cleanse that lifts impurities and refreshes tired skin.",
+        "ar": "تنظيف عميق ينقّي البشرة من الشوائب ويعيد إليها نضارتها."
+      },
+      "category": "addon",
+      "popular": false,
+      "image": null
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal-1",
+      "caption": { "en": "Precision scissor work", "ar": "دقّة المقص" },
+      "image": "/gallery/01-scissors.svg"
+    },
+    {
+      "id": "gal-2",
+      "caption": { "en": "The straight razor ritual", "ar": "طقس الموس الكلاسيكي" },
+      "image": "/gallery/02-razor.svg"
+    },
+    {
+      "id": "gal-3",
+      "caption": { "en": "Your chair is waiting", "ar": "كرسيّك بانتظارك" },
+      "image": "/gallery/03-chair.svg"
+    },
+    {
+      "id": "gal-4",
+      "caption": { "en": "Tools of the trade", "ar": "أدوات الحِرفة" },
+      "image": "/gallery/04-comb.svg"
+    },
+    {
+      "id": "gal-5",
+      "caption": { "en": "Est. on tradition", "ar": "أصالة تُتوارث" },
+      "image": "/gallery/05-pole.svg"
+    },
+    {
+      "id": "gal-6",
+      "caption": { "en": "Finished to perfection", "ar": "لمسة الختام" },
+      "image": "/gallery/06-mirror.svg"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "test-1",
+      "name": "خالد المهيري",
+      "quote": {
+        "en": "The best barber I've tried in Dubai — obsessive attention to detail and the result is consistent every time.",
+        "ar": "أفضل حلّاق جرّبته في دبي — اهتمام بأدق التفاصيل، والنتيجة ثابتة في كل مرة."
+      },
+      "rating": 5
+    },
+    {
+      "id": "test-2",
+      "name": "Ahmed R.",
+      "quote": {
+        "en": "Finally found my barber in Dubai. The hot towel shave is an experience in itself.",
+        "ar": "أخيراً وجدت حلّاقي في دبي. الحلاقة بالمنشفة الساخنة تجربة بحد ذاتها."
+      },
+      "rating": 5
+    },
+    {
+      "id": "test-3",
+      "name": "سعود العامري",
+      "quote": {
+        "en": "Elegant place, professional service. I now book every two weeks without thinking twice.",
+        "ar": "المكان راقٍ والتعامل احترافي. صرت أحجز كل أسبوعين من دون تفكير."
+      },
+      "rating": 5
+    },
+    {
+      "id": "test-4",
+      "name": "James P.",
+      "quote": {
+        "en": "Impeccable attention to detail. The Executive package is worth every dirham.",
+        "ar": "دقة لا تُضاهى في التفاصيل. باقة الإكزكيوتيف تستحق كل درهم."
+      },
+      "rating": 5
+    },
+    {
+      "id": "test-5",
+      "name": "عمر الشامسي",
+      "quote": {
+        "en": "Booked for my son and myself — wonderful with kids, and a first-class cut for me.",
+        "ar": "حجزت لابني ولنفسي — تعامل رائع مع الأطفال، وقصة من الطراز الأول لي."
+      },
+      "rating": 4
+    }
+  ]
+}

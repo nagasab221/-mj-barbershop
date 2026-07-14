@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <pattern id="pin2" width="26" height="10" patternUnits="userSpaceOnUse">
+      <rect width="1" height="10" fill="#f5f3ef" opacity="0.045"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="1000" fill="#121114"/>
+  <rect width="800" height="1000" fill="url(#pin2)"/>
+  <rect x="42" y="42" width="716" height="916" fill="none" stroke="#f5f3ef" stroke-opacity="0.12"/>
+  <rect x="56" y="56" width="688" height="888" fill="none" stroke="#f5f3ef" stroke-opacity="0.05"/>
+
+  <!-- straight razor, open -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- blade -->
+    <path d="M330 560 L560 330 Q585 305 610 330 L640 360 Q660 380 640 400 L410 630 Z"
+          stroke="#c9a86a" stroke-width="6"/>
+    <path d="M370 590 L600 360" stroke="#c9a86a" stroke-width="2.5" opacity="0.7"/>
+    <!-- pivot -->
+    <circle cx="392" cy="612" r="10" stroke="#f5f3ef" stroke-opacity="0.6" stroke-width="3"/>
+    <!-- handle -->
+    <path d="M385 640 L230 795 Q205 820 228 843 Q251 866 276 841 L426 691"
+          stroke="#f5f3ef" stroke-opacity="0.55" stroke-width="6"/>
+  </g>
+  <g stroke="#f5f3ef" stroke-opacity="0.35" stroke-width="2">
+    <path d="M250 235 h300" />
+    <path d="M300 205 h200" />
+  </g>
+
+  <text x="400" y="900" text-anchor="middle" fill="#c9a86a" font-family="Georgia, serif" font-size="30" letter-spacing="10">MJ</text>
+</svg>

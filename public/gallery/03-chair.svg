@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <pattern id="pin3" width="26" height="10" patternUnits="userSpaceOnUse">
+      <rect width="1" height="10" fill="#f5f3ef" opacity="0.045"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="1000" fill="#121114"/>
+  <rect width="800" height="1000" fill="url(#pin3)"/>
+  <rect x="42" y="42" width="716" height="916" fill="none" stroke="#f5f3ef" stroke-opacity="0.12"/>
+  <rect x="56" y="56" width="688" height="888" fill="none" stroke="#f5f3ef" stroke-opacity="0.05"/>
+
+  <!-- barber chair, front view -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- headrest -->
+    <rect x="362" y="235" width="76" height="46" rx="12" stroke="#c9a86a" stroke-width="5"/>
+    <!-- backrest -->
+    <rect x="318" y="295" width="164" height="210" rx="26" stroke="#c9a86a" stroke-width="6"/>
+    <path d="M352 330 v140 M400 330 v140 M448 330 v140" stroke="#c9a86a" stroke-width="2.5" opacity="0.6"/>
+    <!-- armrests -->
+    <path d="M318 470 h-52 q-16 0 -16 16 v34 q0 14 14 14 h54" stroke="#f5f3ef" stroke-opacity="0.55" stroke-width="5"/>
+    <path d="M482 470 h52 q16 0 16 16 v34 q0 14 -14 14 h-54" stroke="#f5f3ef" stroke-opacity="0.55" stroke-width="5"/>
+    <!-- seat -->
+    <rect x="296" y="524" width="208" height="58" rx="16" stroke="#c9a86a" stroke-width="6"/>
+    <!-- column & base -->
+    <path d="M400 582 v96" stroke="#f5f3ef" stroke-opacity="0.55" stroke-width="7"/>
+    <ellipse cx="400" cy="712" rx="104" ry="26" stroke="#c9a86a" stroke-width="5"/>
+    <!-- footrest -->
+    <path d="M400 620 l-88 56" stroke="#f5f3ef" stroke-opacity="0.55" stroke-width="5"/>
+    <path d="M286 690 h56" stroke="#c9a86a" stroke-width="5"/>
+  </g>
+
+  <text x="400" y="850" text-anchor="middle" fill="#c9a86a" font-family="Georgia, serif" font-size="30" letter-spacing="10">MJ</text>
+  <path d="M330 872 h140" stroke="#f5f3ef" stroke-opacity="0.25" stroke-width="1.5"/>
+</svg>

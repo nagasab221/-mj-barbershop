@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <pattern id="pin6" width="26" height="10" patternUnits="userSpaceOnUse">
+      <rect width="1" height="10" fill="#f5f3ef" opacity="0.045"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="1000" fill="#121114"/>
+  <rect width="800" height="1000" fill="url(#pin6)"/>
+  <rect x="42" y="42" width="716" height="916" fill="none" stroke="#f5f3ef" stroke-opacity="0.12"/>
+  <rect x="56" y="56" width="688" height="888" fill="none" stroke="#f5f3ef" stroke-opacity="0.05"/>
+
+  <!-- hand mirror -->
+  <g fill="none" stroke-linecap="round">
+    <circle cx="400" cy="430" r="150" stroke="#c9a86a" stroke-width="6"/>
+    <circle cx="400" cy="430" r="122" stroke="#f5f3ef" stroke-opacity="0.45" stroke-width="3"/>
+    <!-- glint -->
+    <path d="M330 380 q40 -50 110 -60" stroke="#f5f3ef" stroke-opacity="0.5" stroke-width="4"/>
+    <path d="M318 425 q10 -22 28 -40" stroke="#f5f3ef" stroke-opacity="0.35" stroke-width="3"/>
+    <!-- handle -->
+    <path d="M400 580 v50" stroke="#c9a86a" stroke-width="6"/>
+    <rect x="380" y="630" width="40" height="150" rx="20" stroke="#c9a86a" stroke-width="6"/>
+    <!-- flourish -->
+    <path d="M260 250 q140 -60 280 0" stroke="#f5f3ef" stroke-opacity="0.35" stroke-width="2.5"/>
+  </g>
+
+  <text x="400" y="880" text-anchor="middle" fill="#c9a86a" font-family="Georgia, serif" font-size="30" letter-spacing="10">MJ</text>
+</svg>
