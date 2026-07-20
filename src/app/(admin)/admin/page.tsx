@@ -3,7 +3,7 @@ import { getContent, supabaseConfigured } from '@/lib/db';
 import AdminLogin from '@/components/admin/AdminLogin';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 
-// Auth + live content on every request — never cached.
+// Auth + live content on every request, never cached.
 export const dynamic = 'force-dynamic';
 
 /** Shown until Supabase credentials are configured. */

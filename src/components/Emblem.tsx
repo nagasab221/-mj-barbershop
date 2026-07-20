@@ -1,5 +1,5 @@
 /**
- * Vintage circular emblem — double ring, serif "MJ" monogram, EST line.
+ * Vintage circular emblem, double ring, serif "MJ" monogram, EST line.
  * Inherits color from `currentColor` so it can be tinted via text classes.
  */
 export default function Emblem({ className = '' }: { className?: string }) {

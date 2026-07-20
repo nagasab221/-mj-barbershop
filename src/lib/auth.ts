@@ -4,7 +4,7 @@
  * Single owner password (ADMIN_PASSWORD); a successful login sets an
  * HttpOnly cookie holding an expiry timestamp signed with HMAC-SHA256
  * (ADMIN_SESSION_SECRET). Built on the Web Crypto API so it runs on the
- * Cloudflare Workers runtime as well as Node — crypto.subtle.verify
+ * Cloudflare Workers runtime as well as Node, crypto.subtle.verify
  * performs the comparisons in constant time.
  */
 import { cookies } from 'next/headers';
@@ -77,7 +77,7 @@ export async function checkPassword(candidate: string): Promise<boolean> {
   const real = process.env.ADMIN_PASSWORD;
   const key = await hmacKey();
   if (!real || !key) return false;
-  // verify(HMAC(real), candidate) — equal only when the strings match.
+  // verify(HMAC(real), candidate), equal only when the strings match.
   const sigOfReal = await crypto.subtle.sign('HMAC', key, encoder.encode(real));
   return crypto.subtle.verify('HMAC', key, sigOfReal, encoder.encode(candidate));
 }

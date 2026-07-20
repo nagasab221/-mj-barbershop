@@ -1,6 +1,6 @@
 /**
  * Server-side Supabase access. The site talks to Supabase exclusively with
- * the service-role key from route handlers and server components — the
+ * the service-role key from route handlers and server components, the
  * browser never sees a Supabase credential, and the tables carry RLS with
  * no public policies.
  */

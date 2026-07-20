@@ -31,7 +31,7 @@ export function LocaleInput({
   return (
     <div className="grid gap-5 md:grid-cols-2">
       <div>
-        <label className="field-label">{label} — English</label>
+        <label className="field-label">{label} (English)</label>
         <input
           type="text"
           className="field"
@@ -40,7 +40,7 @@ export function LocaleInput({
         />
       </div>
       <div>
-        <label className="field-label">{label} — العربية</label>
+        <label className="field-label">{label} (العربية)</label>
         <input
           type="text"
           dir="rtl"
@@ -67,7 +67,7 @@ export function LocaleTextarea({
   return (
     <div className="grid gap-5 md:grid-cols-2">
       <div>
-        <label className="field-label">{label} — English</label>
+        <label className="field-label">{label} (English)</label>
         <textarea
           rows={rows}
           className="field resize-none"
@@ -76,7 +76,7 @@ export function LocaleTextarea({
         />
       </div>
       <div>
-        <label className="field-label">{label} — العربية</label>
+        <label className="field-label">{label} (العربية)</label>
         <textarea
           rows={rows}
           dir="rtl"
@@ -277,11 +277,11 @@ export function ImagePicker({
               ? 'Image is larger than 8 MB.'
               : json?.error === 'not_configured'
                 ? 'Connect Supabase first (see README).'
-                : 'Upload failed — try again.'
+                : 'Upload failed. Try again.'
         );
       }
     } catch {
-      setError('Upload failed — try again.');
+      setError('Upload failed. Try again.');
     } finally {
       setBusy(false);
       if (inputRef.current) inputRef.current.value = '';

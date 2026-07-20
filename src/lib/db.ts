@@ -1,10 +1,10 @@
 /**
  * Data layer for the custom CMS, backed by Supabase:
  *
- *   site_content   — one JSONB row (id 'main') holding all editable content,
+ *   site_content  , one JSONB row (id 'main') holding all editable content,
  *                    seeded from src/lib/fallback-content.json on first load
- *   reservations   — submitted bookings (the /admin inbox)
- *   storage bucket 'uploads' — images uploaded via /admin
+ *   reservations  , submitted bookings (the /admin inbox)
+ *   storage bucket 'uploads', images uploaded via /admin
  *
  * Everything runs server-side with the service-role key (see lib/supabase.ts).
  * When Supabase is not configured, the public site falls back to the built-in
@@ -116,7 +116,7 @@ export async function getContent(): Promise<SiteContent> {
   }
 }
 
-/** Throws on failure — callers surface the error to the admin UI. */
+/** Throws on failure, callers surface the error to the admin UI. */
 export async function saveContent(content: SiteContent): Promise<void> {
   const { error } = await supabase()
     .from('site_content')
@@ -175,7 +175,7 @@ export async function addReservation(
     ].filter(Boolean);
     ({ data, error } = await supabase()
       .from('reservations')
-      .insert({ ...base, notes: parts.join(' — ') })
+      .insert({ ...base, notes: parts.join(' | ') })
       .select('*')
       .single());
   }

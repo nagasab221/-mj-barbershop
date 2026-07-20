@@ -68,16 +68,16 @@ export default function AdminDashboard({ initialContent }: { initialContent: Sit
       if (res.ok && json?.ok && json.content) {
         setContent(json.content);
         setSavedSnapshot(JSON.stringify(json.content));
-        showToast('Saved — the site is updated.');
+        showToast('Saved. The site is updated.');
       } else if (json?.error === 'no_packages') {
         showToast('Not saved: you need at least one service.');
       } else if (res.status === 401) {
         window.location.reload();
       } else {
-        showToast('Save failed — try again.');
+        showToast('Save failed. Try again.');
       }
     } catch {
-      showToast('Save failed — check your connection.');
+      showToast('Save failed. Check your connection.');
     } finally {
       setSaving(false);
     }
@@ -255,7 +255,7 @@ function BookingsPanel() {
                     <span className="ms-3 text-xs tracking-widest text-brass">{r.ref}</span>
                   </p>
                   <p className="mt-1 text-sm text-cream/80">
-                    {r.serviceName} — <span className="text-brass">{r.date}</span> at{' '}
+                    {r.serviceName}, <span className="text-brass">{r.date}</span> at{' '}
                     <span className="text-brass">{r.time}</span>
                     <span className={`ms-3 border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${r.venue === 'home' ? 'border-brass/50 text-brass' : 'border-cream/25 text-cream/60'}`}>
                       {r.venue === 'home' ? '🏠 Home visit' : '💈 Studio'}

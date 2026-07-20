@@ -26,14 +26,14 @@ export default function AdminLogin() {
       const json = (await res.json().catch(() => null)) as { error?: string } | null;
       setError(
         json?.error === 'rate_limited'
-          ? 'Too many attempts — try again in a few minutes.'
+          ? 'Too many attempts. Try again in a few minutes.'
           : json?.error === 'not_configured'
             ? 'ADMIN_PASSWORD / ADMIN_SESSION_SECRET are not set in .env.local.'
             : 'Wrong password.'
       );
       setBusy(false);
     } catch {
-      setError('Something went wrong — try again.');
+      setError('Something went wrong. Try again.');
       setBusy(false);
     }
   }

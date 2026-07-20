@@ -35,14 +35,14 @@ export default function BookingForm({
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [serviceId, setServiceId] = useState('');
+  const [serviceIds, setServiceIds] = useState<string[]>([]);
   const [venueChoice, setVenueChoice] = useState<'home' | 'shop'>('home');
   const [area, setArea] = useState<'inside' | 'outside'>('inside');
   const [address, setAddress] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [notes, setNotes] = useState('');
-  const [company, setCompany] = useState(''); // honeypot — humans never see it
+  const [company, setCompany] = useState(''); // honeypot, humans never see it
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>('idle');
   const [reference, setReference] = useState('');
@@ -51,30 +51,42 @@ export default function BookingForm({
   const areaName = pick(settings.areaName, locale);
   const travelFee = settings.travelFee || 0;
 
-  const selected = services.find((s) => s.id === serviceId) ?? null;
+  /** Every chosen service, in the order they appear in the list. */
+  const chosen = services.filter((s) => serviceIds.includes(s.id));
+  const hasChoice = chosen.length > 0;
+
+  const subtotal = chosen.reduce((sum, s) => sum + s.price, 0);
+  const totalDuration = chosen.reduce((sum, s) => sum + s.duration, 0);
+  /** "from" pricing carries over if any chosen service is variable-priced. */
+  const anyFromPrice = chosen.some((s) => s.startingFrom);
+
   /**
    * Effective venue. While the studio is "coming soon" every booking is a
-   * home visit; otherwise it's fixed by the package unless it supports both.
+   * home visit; otherwise a fixed-venue service pins it, and anything else
+   * leaves the choice to the client.
    */
+  const fixedVenues = Array.from(new Set(chosen.map((s) => s.venue).filter((v) => v !== 'both')));
   const venue: 'home' | 'shop' = !studioOpen
     ? 'home'
-    : !selected
-      ? venueChoice
-      : selected.venue === 'both'
-        ? venueChoice
-        : selected.venue;
+    : fixedVenues.length === 1
+      ? (fixedVenues[0] as 'home' | 'shop')
+      : venueChoice;
 
   const appliedFee = venue === 'home' && area === 'outside' ? travelFee : 0;
-  const total = selected ? selected.price + appliedFee : 0;
+  const total = subtotal + appliedFee;
+
+  function toggleService(id: string) {
+    setServiceIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
+  }
 
   const slots = useMemo(() => (date ? slotsForDate(settings, date) : []), [settings, date]);
 
-  // "Book this service" buttons in the pricing grid preselect here.
+  // "Add to booking" buttons in the pricing grid add to the selection here.
   useEffect(() => {
     const onSelect = (e: Event) => {
       const id = (e as CustomEvent<string>).detail;
       if (services.some((s) => s.id === id)) {
-        setServiceId(id);
+        setServiceIds((ids) => (ids.includes(id) ? ids : [...ids, id]));
         setStatus((s) => (s === 'success' ? 'idle' : s));
       }
     };
@@ -92,7 +104,7 @@ export default function BookingForm({
     const next: Record<string, string> = {};
     if (name.trim().length < 2) next.name = t('errName');
     if (!normalizeUAEPhone(phone)) next.phone = t('errPhone');
-    if (!serviceId) next.service = t('errService');
+    if (!hasChoice) next.service = t('errService');
     if (venue === 'home' && address.trim().length < 5) next.address = t('errAddress');
     if (!date || isBlocked(settings, date)) next.date = t('errDate');
     if (!time || !slots.includes(time)) next.time = t('errTime');
@@ -113,9 +125,8 @@ export default function BookingForm({
         body: JSON.stringify({
           name: name.trim(),
           phone,
-          serviceId,
-          serviceName: selected?.label ?? '',
-          servicePrice: selected?.price,
+          serviceIds: chosen.map((s) => s.id),
+          serviceName: chosen.map((s) => s.label).join(' + '),
           date,
           time,
           venue,
@@ -141,7 +152,7 @@ export default function BookingForm({
   function reset() {
     setName('');
     setPhone('');
-    setServiceId('');
+    setServiceIds([]);
     setVenueChoice('home');
     setArea('inside');
     setAddress('');
@@ -230,17 +241,22 @@ export default function BookingForm({
           </div>
         </div>
 
-        {/* Service cards */}
+        {/* Service cards (pick as many as you want) */}
         <div>
-          <span className="field-label">{t('service')}</span>
+          <span className="field-label">
+            {t('service')}
+            <span className="ms-2 font-normal normal-case tracking-normal text-cream/40">
+              {t('serviceHint')}
+            </span>
+          </span>
           <div className="grid gap-3 sm:grid-cols-2">
             {services.map((s) => {
-              const active = s.id === serviceId;
+              const active = serviceIds.includes(s.id);
               return (
                 <button
                   key={s.id}
                   type="button"
-                  onClick={() => setServiceId(s.id)}
+                  onClick={() => toggleService(s.id)}
                   aria-pressed={active}
                   className={`flex flex-col gap-2 border p-4 text-start transition-all duration-300 ${
                     active
@@ -249,8 +265,18 @@ export default function BookingForm({
                   }`}
                 >
                   <span className="flex items-baseline justify-between gap-3">
-                    <span className={`font-display text-base leading-snug ${active ? 'text-brass' : 'text-cream'}`}>
-                      {s.label}
+                    <span className="flex items-baseline gap-2">
+                      <span
+                        aria-hidden
+                        className={`mt-0.5 flex h-4 w-4 shrink-0 translate-y-0.5 items-center justify-center border text-[10px] leading-none ${
+                          active ? 'border-brass bg-brass text-ink' : 'border-cream/30 text-transparent'
+                        }`}
+                      >
+                        ✓
+                      </span>
+                      <span className={`font-display text-base leading-snug ${active ? 'text-brass' : 'text-cream'}`}>
+                        {s.label}
+                      </span>
                     </span>
                     <span className="ltr-embed shrink-0 text-sm font-medium text-brass">
                       {formatPrice(s.price, locale, s.startingFrom)}
@@ -309,14 +335,16 @@ export default function BookingForm({
                 </span>
               </div>
             </div>
-          ) : selected && selected.venue !== 'both' ? (
+          ) : fixedVenues.length === 1 ? (
             <p className="flex items-center gap-2.5 border border-cream/15 bg-ink-800/40 px-4 py-3 text-sm text-cream/85">
-              {selected.venue === 'home' ? (
+              {venue === 'home' ? (
                 <HomeIcon className="h-4 w-4 text-brass" />
               ) : (
                 <StoreIcon className="h-4 w-4 text-brass" />
               )}
-              {selected.venue === 'home' ? `${t('venueHome')} — ${t('venueHomeHint')}` : `${t('venueShop')} — ${t('venueShopHint')}`}
+              {venue === 'home'
+                ? `${t('venueHome')}. ${t('venueHomeHint')}`
+                : `${t('venueShop')}. ${t('venueShopHint')}`}
             </p>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">
@@ -352,7 +380,7 @@ export default function BookingForm({
 
           {venue === 'home' && (
             <>
-              {/* Area — drives the travel fee */}
+              {/* Area, drives the travel fee */}
               <div className="mt-5">
                 <span className="field-label">{t('areaLabel')}</span>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -471,7 +499,7 @@ export default function BookingForm({
           />
         </div>
 
-        {/* Honeypot — hidden from humans, bots fill it and get silently dropped. */}
+        {/* Honeypot, hidden from humans, bots fill it and get silently dropped. */}
         <div className="sr-only" aria-hidden>
           <label htmlFor="bk-company">Company</label>
           <input
@@ -490,19 +518,33 @@ export default function BookingForm({
         <div className="border border-cream/15 bg-ink-800/60 p-6 lg:sticky lg:top-24">
           <h3 className="font-display text-xl text-cream">{t('summaryTitle')}</h3>
           <dl className="mt-5 space-y-3.5 text-sm">
-            <div className="flex items-start justify-between gap-4 border-b border-cream/10 pb-3.5">
+            {/* Every chosen service with its own price */}
+            <div className="border-b border-cream/10 pb-3.5">
               <dt className="text-cream/50">{t('sService')}</dt>
-              <dd className="text-end font-medium text-cream">{selected ? selected.label : '—'}</dd>
+              {hasChoice ? (
+                <dd className="mt-2 space-y-1.5">
+                  {chosen.map((s) => (
+                    <span key={s.id} className="flex items-baseline justify-between gap-3">
+                      <span className="font-medium text-cream">{s.label}</span>
+                      <span className="ltr-embed shrink-0 text-cream/70">
+                        {formatPrice(s.price, locale, s.startingFrom)}
+                      </span>
+                    </span>
+                  ))}
+                </dd>
+              ) : (
+                <dd className="mt-1 text-cream/40">{t('servicePlaceholder')}</dd>
+              )}
             </div>
             <div className="flex items-start justify-between gap-4 border-b border-cream/10 pb-3.5">
               <dt className="text-cream/50">{t('sDuration')}</dt>
               <dd className="font-medium text-cream">
-                {selected ? ts('mins', { count: selected.duration }) : '—'}
+                {hasChoice ? ts('mins', { count: totalDuration }) : '–'}
               </dd>
             </div>
             <div className="flex items-start justify-between gap-4 border-b border-cream/10 pb-3.5">
               <dt className="text-cream/50">{t('sVenue')}</dt>
-              <dd className="text-end font-medium text-cream">{selected ? venueLabel : '—'}</dd>
+              <dd className="text-end font-medium text-cream">{hasChoice ? venueLabel : '–'}</dd>
             </div>
             <div className="flex items-start justify-between gap-4 border-b border-cream/10 pb-3.5">
               <dt className="text-cream/50">{t('sWhen')}</dt>
@@ -513,11 +555,11 @@ export default function BookingForm({
                     <span className="ltr-embed ms-2 text-brass">{formatSlot(time, locale)}</span>
                   </>
                 ) : (
-                  '—'
+                  '–'
                 )}
               </dd>
             </div>
-            {selected && appliedFee > 0 && (
+            {hasChoice && appliedFee > 0 && (
               <div className="flex items-start justify-between gap-4 border-b border-cream/10 pb-3.5">
                 <dt className="text-cream/50">{t('sTravel')}</dt>
                 <dd className="ltr-embed font-medium text-cream">+ {formatPrice(appliedFee, locale)}</dd>
@@ -528,7 +570,7 @@ export default function BookingForm({
           <div className="mt-5 flex items-baseline justify-between">
             <span className="font-display text-lg text-cream">{t('sTotal')}</span>
             <span className="ltr-embed font-display text-xl text-brass">
-              {selected ? formatPrice(total, locale, selected.startingFrom) : '—'}
+              {hasChoice ? formatPrice(total, locale, anyFromPrice) : '–'}
             </span>
           </div>
 

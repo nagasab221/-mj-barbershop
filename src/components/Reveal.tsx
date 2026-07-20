@@ -4,7 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react';
 
 /**
  * Fades children up once they enter the viewport.
- * Pure CSS transition driven by an IntersectionObserver — no dependencies.
+ * Pure CSS transition driven by an IntersectionObserver, no dependencies.
  */
 export default function Reveal({
   children,

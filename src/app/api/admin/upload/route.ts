@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
   // Avoid `instanceof File`: the edge runtime's multipart parser can return a
   // Blob-like value whose constructor differs from the sandbox's File global,
-  // so instanceof yields false negatives. Ruling out string/null is enough —
+  // so instanceof yields false negatives. Ruling out string/null is enough ,
   // the remaining value is a File with arrayBuffer()/name/type/size.
   const file = form.get('file');
   if (!file || typeof file === 'string') {

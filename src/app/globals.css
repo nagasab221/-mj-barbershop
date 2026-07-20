@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────────
-   MJ Barbershop — "Elegant Barbershop, Black & White"
+   MJ Barbershop, "Elegant Barbershop, Black & White"
    Ink (#0a0a0a) · Cream (#f5f3ef) · Brass accent (#c9a86a)
    ───────────────────────────────────────────────────────────── */
 
@@ -56,7 +56,7 @@ section[id] {
   background: var(--brass);
 }
 
-/* Wide letterspacing is a Latin luxury — tame it for connected Arabic script. */
+/* Wide letterspacing is a Latin luxury, tame it for connected Arabic script. */
 html[lang='ar'] .tracking-luxe {
   letter-spacing: 0.02em;
 }
@@ -73,7 +73,7 @@ html[lang='ar'] .tracking-wider {
 }
 
 @layer components {
-  /* Vertical pinstripes — barely-there tailoring texture. */
+  /* Vertical pinstripes, barely-there tailoring texture. */
   .pinstripes-light {
     background-image: repeating-linear-gradient(
       90deg,
@@ -93,7 +93,7 @@ html[lang='ar'] .tracking-wider {
     );
   }
 
-  /* Film-grain overlay for the hero — keeps the monochrome from feeling flat. */
+  /* Film-grain overlay for the hero, keeps the monochrome from feeling flat. */
   .grain::before {
     content: '';
     position: absolute;
@@ -103,7 +103,7 @@ html[lang='ar'] .tracking-wider {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Buttons — sharp corners, slow elegant transitions. */
+  /* Buttons, sharp corners, slow elegant transitions. */
   .btn {
     @apply inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs font-semibold uppercase tracking-luxe transition-all duration-500 ease-elegant;
   }

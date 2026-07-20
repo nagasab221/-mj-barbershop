@@ -19,7 +19,7 @@ import FloatingCTA from '@/components/FloatingCTA';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-// Content lives in Supabase and is edited via /admin — render on every
+// Content lives in Supabase and is edited via /admin, render on every
 // request so changes appear immediately.
 export const dynamic = 'force-dynamic';
 
@@ -58,7 +58,7 @@ function buildJsonLd(content: SiteContent, locale: Locale) {
       longitude: location.lng
     },
     areaServed: { '@type': 'City', name: 'Abu Dhabi' },
-    availableService: { '@type': 'Service', serviceType: 'Mobile barber — home visits' },
+    availableService: { '@type': 'Service', serviceType: 'Mobile barber, home visits' },
     openingHoursSpecification: reservation.workingHours
       .filter((h) => !h.closed && h.open && h.close)
       .map((h) => ({

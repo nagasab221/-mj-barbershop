@@ -31,7 +31,7 @@ interface ManagePayload {
 
 const REF_RE = /^MJ-[A-Z0-9]{5}$/;
 
-/** Only what the client needs to see — never internal ids. */
+/** Only what the client needs to see, never internal ids. */
 function publicView(r: StoredReservation) {
   return {
     ref: r.ref,
@@ -50,7 +50,7 @@ async function notifyOwner(kind: 'reschedule' | 'cancel', r: StoredReservation, 
   const lines =
     kind === 'reschedule'
       ? [
-          '🔁 <b>Booking Rescheduled — MJ Barbershop</b>',
+          '🔁 <b>Booking Rescheduled, MJ Barbershop</b>',
           '',
           `👤 <b>Name:</b> ${escapeHtml(r.name)}`,
           `📱 <b>Phone:</b> ${escapeHtml(r.phone)}`,
@@ -60,7 +60,7 @@ async function notifyOwner(kind: 'reschedule' | 'cancel', r: StoredReservation, 
           `🔖 <b>Ref:</b> ${r.ref}`
         ]
       : [
-          '❌ <b>Booking Cancelled — MJ Barbershop</b>',
+          '❌ <b>Booking Cancelled, MJ Barbershop</b>',
           '',
           `👤 <b>Name:</b> ${escapeHtml(r.name)}`,
           `📱 <b>Phone:</b> ${escapeHtml(r.phone)}`,

@@ -27,7 +27,7 @@ export async function GET() {
   }
 }
 
-/** Body: { id, status } — updates one booking's status. */
+/** Body: { id, status }, updates one booking's status. */
 export async function PATCH(req: NextRequest) {
   if (!(await isAdminRequest())) return unauthorized();
   if (!supabaseConfigured()) return notConfigured();

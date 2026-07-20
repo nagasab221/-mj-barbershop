@@ -39,7 +39,7 @@ function id(v: unknown): string {
   return /^[\w-]+$/.test(s) && s.length >= 3 ? s : `item-${crypto.randomUUID()}`;
 }
 
-/** Seeded art or images from our own Supabase uploads bucket — nothing else. */
+/** Seeded art or images from our own Supabase uploads bucket, nothing else. */
 function imagePath(v: unknown): string {
   const s = str(v, 500);
   if (s.startsWith('/gallery/')) return s;

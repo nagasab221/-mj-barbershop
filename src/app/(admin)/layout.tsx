@@ -6,7 +6,7 @@ const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfa
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'MJ Barbershop — Admin',
+  title: 'MJ Barbershop Admin',
   robots: { index: false, follow: false }
 };
 

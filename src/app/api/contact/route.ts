@@ -38,12 +38,12 @@ export async function POST(req: NextRequest) {
   }
 
   if (!telegramConfigured()) {
-    // Demo mode — accept so the form is testable before configuration.
+    // Demo mode, accept so the form is testable before configuration.
     return NextResponse.json({ ok: true, notified: false });
   }
 
   const lines = [
-    '✉️ <b>New Message — MJ Barbershop</b>',
+    '✉️ <b>New Message, MJ Barbershop</b>',
     '',
     name ? `👤 <b>Name:</b> ${escapeHtml(name)}` : null,
     contact ? `📱 <b>Contact:</b> ${escapeHtml(contact)}` : null,

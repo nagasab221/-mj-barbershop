@@ -23,12 +23,12 @@ export function normalizeUAEPhone(raw: string): string | null {
   return m ? `+971${m[1]}` : null;
 }
 
-/** Today's date in the shop's timezone (Asia/Dubai), as YYYY-MM-DD. */
+/** Today's date in UAE local time (Asia/Dubai is the canonical UAE zone), as YYYY-MM-DD. */
 export function dubaiTodayISO(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Dubai' }).format(new Date());
 }
 
-/** Current time in Dubai as minutes since midnight. */
+/** Current UAE local time as minutes since midnight. */
 function dubaiNowMinutes(): number {
   const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Asia/Dubai',

@@ -15,7 +15,7 @@ import {
 import type { Locale, ReservationSettings } from '@/lib/types';
 
 /**
- * Themed month calendar for picking a booking day — replaces the generic
+ * Themed month calendar for picking a booking day, replaces the generic
  * native date input. Days outside working hours, blocked dates, and days
  * with no remaining slots are disabled.
  */

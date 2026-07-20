@@ -10,7 +10,7 @@ export interface L {
 
 export type PackageCategory = 'hair' | 'beard' | 'combo' | 'kids' | 'vip' | 'addon';
 
-/** Where a service can be performed — home visit, at the studio, or either. */
+/** Where a service can be performed, home visit, at the studio, or either. */
 export const VENUES = ['home', 'shop', 'both'] as const;
 export type Venue = (typeof VENUES)[number];
 

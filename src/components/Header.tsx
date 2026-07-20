@@ -46,7 +46,7 @@ export default function Header() {
           </span>
         </a>
 
-        {/* Desktop nav — flex-1 keeps it centered with breathing room on both sides */}
+        {/* Desktop nav, flex-1 keeps it centered with breathing room on both sides */}
         <nav className="hidden flex-1 items-center justify-center gap-5 lg:flex xl:gap-6" aria-label="Main">
           {ANCHORS.map((a) => (
             <a
@@ -88,7 +88,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile overlay menu — slides in from the end edge */}
+      {/* Mobile overlay menu, slides in from the end edge */}
       <div
         className={`fixed inset-0 z-50 flex flex-col bg-ink pinstripes-light transition-[transform,opacity] duration-500 ease-elegant lg:hidden ${
           open
@@ -128,7 +128,7 @@ export default function Header() {
           </a>
         </nav>
         <div className="pb-10 text-center text-[11px] uppercase tracking-luxe text-cream/40">
-          MJ Barbershop · Dubai
+          MJ Barbershop · Abu Dhabi
         </div>
       </div>
     </header>
